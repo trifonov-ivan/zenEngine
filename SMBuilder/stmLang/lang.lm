@@ -1,0 +1,84 @@
+%{
+    #include <stdio.h>
+    #include <ctype.h>
+    #include <string.h>
+    #include "NodeType.h"
+    #include "y.tab.h"
+%}
+
+comment     \/\*([^*]|\n)*\*\/
+digit       [0-9]
+ichar       [A-Z_a-z]
+integer     {digit}+
+newline     \n
+strchar     ([ ~]|\\n)
+identifier  {ichar}([0-9]|{ichar})*
+whitespace  [ \t]+
+float       ([+-]?{digit}+)?\.{digit}*(e?[+-]?{digit}+)?
+chrliteral  '([!*]|\\n)'
+nullstring  \"\"
+escquote    [^"]*\\\"[^"]*
+strliteral  \"[^"]*{escquote}*\"
+
+%%
+
+"#SM:"          return OPEN_TERMINAL;
+
+"$"             return *yytext;
+
+"->"            return *yytext;
+
+"validation"    return VALIDATION_MODIFIER;
+
+"enter"         return ENTER_MODIFIER;
+
+"exit"          return EXIT_MODIFIER;
+
+"event"         return EVENT_MODIFIER;
+
+"in"            return IN;
+
+"NOT"           return NOT;
+
+"OR"            return OR;
+
+"effects"       return *yytext;
+
+"addSquare"     return ADD_SQUARE;
+
+"addList"       return ADD_LIST;
+
+{ichar}+        {yylval.textValue = strdup(yytext); return TOKEN;}
+
+{integer}       {yylval.intValue = atoi(yytext); return INTEGER;}
+
+{strliteral}    {yylval.textValue = strdup(yytext); return STRING;}
+
+"="             return EQ;
+
+">"             return MT;
+
+">="            return ME;
+
+"<="            return LE;
+
+"<"             return LT;
+
+"+"             return PLUS;
+
+"-"             return MINUS;
+
+[:{};.,()]      {return *yytext;}
+
+{comment}       ;
+
+[ \t\n]         ;
+
+.               { printf(" ERROR CAUSED BY TOKEN:%s\n",yytext); return ERROR;}
+
+
+%%
+
+int yywrap(void) {
+    return 1;
+}

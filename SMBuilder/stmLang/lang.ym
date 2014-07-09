@@ -1,0 +1,173 @@
+%{
+    #include <stdio.h>
+    #include <string.h>
+    #include <stdlib.h>
+    #include <stdarg.h>
+    #include "SMBuilderMediator.h"
+    int yylex(void);
+    void yyerror(char *);
+    void yylog(char *);
+
+%}
+
+%union {
+    int intValue;
+    double doubleValue;
+    char *textValue;
+    nodeType *node;
+    nodeList *list;
+    __unsafe_unretained id object;
+};
+
+%token <textValue> TOKEN
+
+%token <intValue> INTEGER
+
+%token <doubleValue> DOUBLE
+
+%token EQ LT MT LE ME IN NOT OR MINUS PLUS STRING
+
+%token OPEN_TERMINAL ENTER_MODIFIER EXIT_MODIFIER VALIDATION_MODIFIER ADD_LIST ADD_SQUARE EVENT_MODIFIER
+
+%token ERROR
+
+%type <node> decl
+
+%type <list> decl_list
+
+%type <textValue> prop STRING
+
+%type <object> expr NUMBER array range number_list string_val
+
+%left ':'
+
+%%
+
+sm:
+    sm_descript def_list                        {/*nothing to do*/}
+
+sm_descript:
+    OPEN_TERMINAL TOKEN                         {registerSM($2);}
+    | OPEN_TERMINAL TOKEN '{' decl_list '}'     {registerSM($2); processSMProps($4);}
+;
+
+def_list:                                       {/*nothing to do*/}
+    | def_list def                              {/*nothing to do*/}
+;
+
+def:
+    layer                                       {/*nothing to do. already done on child*/}
+    | state                                     {/*nothing to do. already done on child*/}
+    | transition                                {/*nothing to do. already done on child*/}
+;
+
+layer:
+    '$' TOKEN                                   {registerLayer($2,NULL);}
+    | '$' TOKEN ':' TOKEN                       {registerLayer($2,$4);}
+;
+
+state:
+    state_def '{' decl_list '}'                 {processStateProps($3);}
+;
+
+state_def:
+    TOKEN                                       {registerState($1,NULL);checkFillingState(SSK_COMMON);}
+    | TOKEN ':' TOKEN                           {registerState($1,NULL);checkFillingState(SSK_COMMON);}
+    | '(' state_def ')'                         {/*nothing to do*/}
+    | state_def '.' ENTER_MODIFIER              {
+                                                    checkFillingState(SSK_ENTER);
+                                                    checkTransitionFillingState(TSK_COMMON);
+                                                }
+    | state_def '.' EXIT_MODIFIER               {
+                                                    checkFillingState(SSK_EXIT);
+                                                    checkTransitionFillingState(TSK_COMMON);
+                                                }
+;
+
+transition:
+    tran_descript '{' decl_list '}'             {processTranProps($3);}
+    | tran_descript '.' EVENT_MODIFIER EQ expr  {setTranEvent($5);}
+;
+
+tran_descript:
+    TOKEN '->' TOKEN                            {registerTransition($1, $3);}
+    | '(' tran_descript ')'                     {/*nothing to do*/}
+    | tran_descript '.' VALIDATION_MODIFIER     {checkTransitionFillingState(TSK_VALIDATION);}
+;
+
+decl_list:                                      {$$ = NULL;}
+    | decl ';'                                  {$$ = listWithParam($1);}
+    | decl_list decl ';'                        {$$ = addNodeToList($1,$2);}
+    | decl_list OR decl_list                    {$$ = orList($1,$3);}
+    | '(' decl_list ')'                         {$$ = $2;}
+;
+
+decl:
+    prop EQ expr                                {$$ = leafCall(signEQ,$1,$3);}
+    | prop LT expr                              {$$ = leafCall(signLT,$1,$3);}
+    | prop MT expr                              {$$ = leafCall(signMT,$1,$3);}
+    | prop ME expr                              {$$ = leafCall(signME,$1,$3);}
+    | prop LE expr                              {$$ = leafCall(signLE,$1,$3);}
+    | prop IN range                             {$$ = leafCall(signINRANGE,$1,$3);}
+    | prop IN array                             {$$ = leafCall(signIN,$1,$3);}
+    | TOKEN ':' TOKEN                           {$$ = leafCall(signINHERIT,$1,[NSString stringWithUTF8String:$3]);}
+    | NOT '(' decl ')'                          {$$ = mathCall(signNOT,$3,NULL);}
+    | PLUS TOKEN '{' decl_list '}'              {
+                                                    addComponent($2);
+                                                    processComponentProps($4);
+                                                }
+    | PLUS TOKEN                                {addComponent($2); $$ = NULL;}
+    | MINUS TOKEN                               {removeComponent($2); $$ = NULL;}
+    | effect                                    {/*nothing to do*/ $$ = NULL;}
+;
+
+prop:
+    TOKEN                                       {$$ = $1;}
+;
+
+expr:
+    NUMBER                                      {$$ = $1;}
+    | string_val                                {$$ = $1;}
+;
+
+range:
+    '(' NUMBER ',' NUMBER ')'                   {$$ = [NSArray arrayWithObjects:$2,$4,nil];}
+;
+
+array:
+    '{' number_list '}'                         {$$ = $2;}
+;
+
+effect:
+    'effects' '.' TOKEN                         {addEffectToLayer($3);}
+    | effect '.' ADD_LIST '(' number_list ')'   {addListToEffect($5);}
+    | effect '.' ADD_SQUARE '(' NUMBER ',' NUMBER ')'   {addSquareEffect($5,$7);}
+;
+
+number_list:
+    NUMBER                                      {$$ = [NSMutableArray arrayWithObjects:$1,nil];}
+    | number_list ',' NUMBER                    {[((NSMutableArray*)$1) addObject:$3];}
+;
+
+NUMBER:
+    INTEGER                                     {$$ = [NSNumber numberWithInt:$1];}
+    | DOUBLE                                    {$$ = [NSNumber numberWithDouble:$1];}
+    | MINUS NUMBER                              {$$ = [NSNumber numberWithDouble:-[$2 doubleValue]];}
+    | PLUS NUMBER                               {$$ = $2;}
+;
+
+string_val:
+    STRING                                      {$$ = [NSString stringWithUTF8String:$1];
+                                                 $$ = [$$ stringByReplacingOccurrencesOfString:@"\"" withString:@""];}
+;
+
+%%
+
+void yylog(char *s) {
+    fprintf(stderr, "LOG: %s\n", s);
+}
+
+
+void yyerror(char *s) {
+    fprintf(stderr, "ERROR: %s\n", s);
+}

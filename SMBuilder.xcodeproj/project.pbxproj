@@ -8,25 +8,43 @@
 
 /* Begin PBXBuildFile section */
 		200A7F7A196DB68E005B0C01 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 200A7F79196DB68E005B0C01 /* Foundation.framework */; };
-		200A7F7F196DB68E005B0C01 /* SMBuilder.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 200A7F7E196DB68E005B0C01 /* SMBuilder.h */; };
-		200A7F81196DB68E005B0C01 /* SMBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7F80196DB68E005B0C01 /* SMBuilder.m */; };
-		200A7F88196DB68E005B0C01 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 200A7F87196DB68E005B0C01 /* XCTest.framework */; };
-		200A7F89196DB68E005B0C01 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 200A7F79196DB68E005B0C01 /* Foundation.framework */; };
-		200A7F8B196DB68E005B0C01 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 200A7F8A196DB68E005B0C01 /* UIKit.framework */; };
-		200A7F8E196DB68E005B0C01 /* libSMBuilder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 200A7F76196DB68E005B0C01 /* libSMBuilder.a */; };
-		200A7F94196DB68E005B0C01 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 200A7F92196DB68E005B0C01 /* InfoPlist.strings */; };
-		200A7F96196DB68E005B0C01 /* SMBuilderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7F95196DB68E005B0C01 /* SMBuilderTests.m */; };
+		200A8018196DB6EE005B0C01 /* SMTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FE2196DB6DC005B0C01 /* SMTransition.m */; };
+		200A8019196DB6F0005B0C01 /* SMStateDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FE0196DB6DC005B0C01 /* SMStateDescription.m */; };
+		200A801A196DB6F1005B0C01 /* SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FDE196DB6DC005B0C01 /* SM.m */; };
+		200A801B196DB6F6005B0C01 /* ComponentsFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FE5196DB6DC005B0C01 /* ComponentsFactory.m */; };
+		200A801D196DB6FE005B0C01 /* PlaneEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FE8196DB6DC005B0C01 /* PlaneEntity.m */; };
+		200A801F196DB6FE005B0C01 /* PlaneStateDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FEA196DB6DC005B0C01 /* PlaneStateDescription.m */; };
+		200A8021196DB6FE005B0C01 /* PlaneWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FEC196DB6DC005B0C01 /* PlaneWorld.m */; };
+		200A8023196DB6FE005B0C01 /* SMEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FEE196DB6DC005B0C01 /* SMEffect.m */; };
+		200A8025196DB6FE005B0C01 /* SMLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FF0196DB6DC005B0C01 /* SMLayer.m */; };
+		200A8027196DB6FE005B0C01 /* SMEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FF2196DB6DC005B0C01 /* SMEntity.m */; };
+		200A8029196DB6FE005B0C01 /* World.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FF4196DB6DC005B0C01 /* World.m */; };
+		200A802A196DB712005B0C01 /* lang.lm in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FD7196DB6DC005B0C01 /* lang.lm */; };
+		200A802B196DB712005B0C01 /* lang.ym in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FD8196DB6DC005B0C01 /* lang.ym */; };
+		200A802C196DB712005B0C01 /* SMBuilderMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FDB196DB6DC005B0C01 /* SMBuilderMediator.m */; };
+		200A802D196DB716005B0C01 /* SMReader+InternalAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FD3196DB6DC005B0C01 /* SMReader+InternalAPI.m */; };
+		200A802E196DB719005B0C01 /* SMReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FD5196DB6DC005B0C01 /* SMReader.m */; };
+		200A8030196DB75B005B0C01 /* AbstractSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FA2196DB6DC005B0C01 /* AbstractSystem.m */; };
+		200A8032196DB75B005B0C01 /* Engine.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FA4196DB6DC005B0C01 /* Engine.m */; };
+		200A8034196DB75B005B0C01 /* Entity.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FA6196DB6DC005B0C01 /* Entity.m */; };
+		200A8036196DB75B005B0C01 /* Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FA8196DB6DC005B0C01 /* Filter.m */; };
+		200A8038196DB75B005B0C01 /* Index.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FAA196DB6DC005B0C01 /* Index.m */; };
+		200A803A196DB75B005B0C01 /* FastString.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FAC196DB6DC005B0C01 /* FastString.m */; };
+		200A803C196DB75B005B0C01 /* GameComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FAE196DB6DC005B0C01 /* GameComponent.m */; };
+		200A803E196DB75B005B0C01 /* GameComponentCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FB0196DB6DC005B0C01 /* GameComponentCollection.m */; };
+		200A8040196DB75B005B0C01 /* GameTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FB2196DB6DC005B0C01 /* GameTime.m */; };
+		200A8043196DB75B005B0C01 /* IDataHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FB5196DB6DC005B0C01 /* IDataHolder.m */; };
+		200A8049196DB75B005B0C01 /* SetArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FBB196DB6DC005B0C01 /* SetArray.m */; };
+		200A804B196DB761005B0C01 /* ListenerNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FBE196DB6DC005B0C01 /* ListenerNode.m */; };
+		200A804D196DB761005B0C01 /* ListenerNodePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FC0196DB6DC005B0C01 /* ListenerNodePool.m */; };
+		200A804F196DB761005B0C01 /* Signal0.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FC2196DB6DC005B0C01 /* Signal0.m */; };
+		200A8051196DB761005B0C01 /* Signal1.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FC4196DB6DC005B0C01 /* Signal1.m */; };
+		200A8053196DB761005B0C01 /* Signal2.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FC6196DB6DC005B0C01 /* Signal2.m */; };
+		200A8055196DB761005B0C01 /* Signal3.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FC8196DB6DC005B0C01 /* Signal3.m */; };
+		200A8057196DB761005B0C01 /* SignalAny.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FCA196DB6DC005B0C01 /* SignalAny.m */; };
+		200A8059196DB761005B0C01 /* SignalBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FCC196DB6DC005B0C01 /* SignalBase.m */; };
+		200A805C196DB7D7005B0C01 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 200A805B196DB7D7005B0C01 /* CoreGraphics.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		200A7F8C196DB68E005B0C01 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 200A7F6E196DB68E005B0C01 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 200A7F75196DB68E005B0C01;
-			remoteInfo = SMBuilder;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		200A7F74196DB68E005B0C01 /* CopyFiles */ = {
@@ -35,7 +53,6 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				200A7F7F196DB68E005B0C01 /* SMBuilder.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,14 +62,84 @@
 		200A7F76196DB68E005B0C01 /* libSMBuilder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSMBuilder.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		200A7F79196DB68E005B0C01 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		200A7F7D196DB68E005B0C01 /* SMBuilder-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SMBuilder-Prefix.pch"; sourceTree = "<group>"; };
-		200A7F7E196DB68E005B0C01 /* SMBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBuilder.h; sourceTree = "<group>"; };
-		200A7F80196DB68E005B0C01 /* SMBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBuilder.m; sourceTree = "<group>"; };
-		200A7F86196DB68E005B0C01 /* SMBuilderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SMBuilderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		200A7F87196DB68E005B0C01 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		200A7F8A196DB68E005B0C01 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		200A7F91196DB68E005B0C01 /* SMBuilderTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SMBuilderTests-Info.plist"; sourceTree = "<group>"; };
-		200A7F93196DB68E005B0C01 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		200A7F95196DB68E005B0C01 /* SMBuilderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBuilderTests.m; sourceTree = "<group>"; };
+		200A7FA1196DB6DC005B0C01 /* AbstractSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractSystem.h; sourceTree = "<group>"; };
+		200A7FA2196DB6DC005B0C01 /* AbstractSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractSystem.m; sourceTree = "<group>"; };
+		200A7FA3196DB6DC005B0C01 /* Engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Engine.h; sourceTree = "<group>"; };
+		200A7FA4196DB6DC005B0C01 /* Engine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Engine.m; sourceTree = "<group>"; };
+		200A7FA5196DB6DC005B0C01 /* Entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
+		200A7FA6196DB6DC005B0C01 /* Entity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Entity.m; sourceTree = "<group>"; };
+		200A7FA7196DB6DC005B0C01 /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
+		200A7FA8196DB6DC005B0C01 /* Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Filter.m; sourceTree = "<group>"; };
+		200A7FA9196DB6DC005B0C01 /* Index.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Index.h; sourceTree = "<group>"; };
+		200A7FAA196DB6DC005B0C01 /* Index.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Index.m; sourceTree = "<group>"; };
+		200A7FAB196DB6DC005B0C01 /* FastString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastString.h; sourceTree = "<group>"; };
+		200A7FAC196DB6DC005B0C01 /* FastString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FastString.m; sourceTree = "<group>"; };
+		200A7FAD196DB6DC005B0C01 /* GameComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameComponent.h; sourceTree = "<group>"; };
+		200A7FAE196DB6DC005B0C01 /* GameComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameComponent.m; sourceTree = "<group>"; };
+		200A7FAF196DB6DC005B0C01 /* GameComponentCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameComponentCollection.h; sourceTree = "<group>"; };
+		200A7FB0196DB6DC005B0C01 /* GameComponentCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameComponentCollection.m; sourceTree = "<group>"; };
+		200A7FB1196DB6DC005B0C01 /* GameTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameTime.h; sourceTree = "<group>"; };
+		200A7FB2196DB6DC005B0C01 /* GameTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameTime.m; sourceTree = "<group>"; };
+		200A7FB3196DB6DC005B0C01 /* IArrayHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IArrayHolder.h; sourceTree = "<group>"; };
+		200A7FB4196DB6DC005B0C01 /* IDataHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDataHolder.h; sourceTree = "<group>"; };
+		200A7FB5196DB6DC005B0C01 /* IDataHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDataHolder.m; sourceTree = "<group>"; };
+		200A7FB6196DB6DC005B0C01 /* IDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDrawable.h; sourceTree = "<group>"; };
+		200A7FB7196DB6DC005B0C01 /* IGameComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGameComponent.h; sourceTree = "<group>"; };
+		200A7FB8196DB6DC005B0C01 /* IUpdatable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUpdatable.h; sourceTree = "<group>"; };
+		200A7FB9196DB6DC005B0C01 /* IUpdateable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUpdateable.h; sourceTree = "<group>"; };
+		200A7FBA196DB6DC005B0C01 /* SetArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetArray.h; sourceTree = "<group>"; };
+		200A7FBB196DB6DC005B0C01 /* SetArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetArray.m; sourceTree = "<group>"; };
+		200A7FBD196DB6DC005B0C01 /* ListenerNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListenerNode.h; sourceTree = "<group>"; };
+		200A7FBE196DB6DC005B0C01 /* ListenerNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListenerNode.m; sourceTree = "<group>"; };
+		200A7FBF196DB6DC005B0C01 /* ListenerNodePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListenerNodePool.h; sourceTree = "<group>"; };
+		200A7FC0196DB6DC005B0C01 /* ListenerNodePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListenerNodePool.m; sourceTree = "<group>"; };
+		200A7FC1196DB6DC005B0C01 /* Signal0.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Signal0.h; sourceTree = "<group>"; };
+		200A7FC2196DB6DC005B0C01 /* Signal0.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Signal0.m; sourceTree = "<group>"; };
+		200A7FC3196DB6DC005B0C01 /* Signal1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Signal1.h; sourceTree = "<group>"; };
+		200A7FC4196DB6DC005B0C01 /* Signal1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Signal1.m; sourceTree = "<group>"; };
+		200A7FC5196DB6DC005B0C01 /* Signal2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Signal2.h; sourceTree = "<group>"; };
+		200A7FC6196DB6DC005B0C01 /* Signal2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Signal2.m; sourceTree = "<group>"; };
+		200A7FC7196DB6DC005B0C01 /* Signal3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Signal3.h; sourceTree = "<group>"; };
+		200A7FC8196DB6DC005B0C01 /* Signal3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Signal3.m; sourceTree = "<group>"; };
+		200A7FC9196DB6DC005B0C01 /* SignalAny.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignalAny.h; sourceTree = "<group>"; };
+		200A7FCA196DB6DC005B0C01 /* SignalAny.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignalAny.m; sourceTree = "<group>"; };
+		200A7FCB196DB6DC005B0C01 /* SignalBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignalBase.h; sourceTree = "<group>"; };
+		200A7FCC196DB6DC005B0C01 /* SignalBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignalBase.m; sourceTree = "<group>"; };
+		200A7FCD196DB6DC005B0C01 /* Signals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Signals.h; sourceTree = "<group>"; };
+		200A7FD2196DB6DC005B0C01 /* SMReader+InternalAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMReader+InternalAPI.h"; sourceTree = "<group>"; };
+		200A7FD3196DB6DC005B0C01 /* SMReader+InternalAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMReader+InternalAPI.m"; sourceTree = "<group>"; };
+		200A7FD4196DB6DC005B0C01 /* SMReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMReader.h; sourceTree = "<group>"; };
+		200A7FD5196DB6DC005B0C01 /* SMReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMReader.m; sourceTree = "<group>"; };
+		200A7FD7196DB6DC005B0C01 /* lang.lm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; path = lang.lm; sourceTree = "<group>"; };
+		200A7FD8196DB6DC005B0C01 /* lang.ym */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.yacc; path = lang.ym; sourceTree = "<group>"; };
+		200A7FD9196DB6DC005B0C01 /* NodeType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeType.h; sourceTree = "<group>"; };
+		200A7FDA196DB6DC005B0C01 /* SMBuilderMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBuilderMediator.h; sourceTree = "<group>"; };
+		200A7FDB196DB6DC005B0C01 /* SMBuilderMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBuilderMediator.m; sourceTree = "<group>"; };
+		200A7FDD196DB6DC005B0C01 /* SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SM.h; sourceTree = "<group>"; };
+		200A7FDE196DB6DC005B0C01 /* SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SM.m; sourceTree = "<group>"; };
+		200A7FDF196DB6DC005B0C01 /* SMStateDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMStateDescription.h; sourceTree = "<group>"; };
+		200A7FE0196DB6DC005B0C01 /* SMStateDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMStateDescription.m; sourceTree = "<group>"; };
+		200A7FE1196DB6DC005B0C01 /* SMTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMTransition.h; sourceTree = "<group>"; };
+		200A7FE2196DB6DC005B0C01 /* SMTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMTransition.m; sourceTree = "<group>"; };
+		200A7FE4196DB6DC005B0C01 /* ComponentsFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComponentsFactory.h; sourceTree = "<group>"; };
+		200A7FE5196DB6DC005B0C01 /* ComponentsFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComponentsFactory.m; sourceTree = "<group>"; };
+		200A7FE7196DB6DC005B0C01 /* PlaneEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaneEntity.h; sourceTree = "<group>"; };
+		200A7FE8196DB6DC005B0C01 /* PlaneEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaneEntity.m; sourceTree = "<group>"; };
+		200A7FE9196DB6DC005B0C01 /* PlaneStateDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaneStateDescription.h; sourceTree = "<group>"; };
+		200A7FEA196DB6DC005B0C01 /* PlaneStateDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaneStateDescription.m; sourceTree = "<group>"; };
+		200A7FEB196DB6DC005B0C01 /* PlaneWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaneWorld.h; sourceTree = "<group>"; };
+		200A7FEC196DB6DC005B0C01 /* PlaneWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaneWorld.m; sourceTree = "<group>"; };
+		200A7FED196DB6DC005B0C01 /* SMEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMEffect.h; sourceTree = "<group>"; };
+		200A7FEE196DB6DC005B0C01 /* SMEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMEffect.m; sourceTree = "<group>"; };
+		200A7FEF196DB6DC005B0C01 /* SMLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLayer.h; sourceTree = "<group>"; };
+		200A7FF0196DB6DC005B0C01 /* SMLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMLayer.m; sourceTree = "<group>"; };
+		200A7FF1196DB6DC005B0C01 /* SMEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMEntity.h; sourceTree = "<group>"; };
+		200A7FF2196DB6DC005B0C01 /* SMEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMEntity.m; sourceTree = "<group>"; };
+		200A7FF3196DB6DC005B0C01 /* World.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = World.h; sourceTree = "<group>"; };
+		200A7FF4196DB6DC005B0C01 /* World.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = World.m; sourceTree = "<group>"; };
+		200A805B196DB7D7005B0C01 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,18 +147,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				200A805C196DB7D7005B0C01 /* CoreGraphics.framework in Frameworks */,
 				200A7F7A196DB68E005B0C01 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		200A7F83196DB68E005B0C01 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				200A7F88196DB68E005B0C01 /* XCTest.framework in Frameworks */,
-				200A7F8B196DB68E005B0C01 /* UIKit.framework in Frameworks */,
-				200A7F89196DB68E005B0C01 /* Foundation.framework in Frameworks */,
-				200A7F8E196DB68E005B0C01 /* libSMBuilder.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +159,6 @@
 			isa = PBXGroup;
 			children = (
 				200A7F7B196DB68E005B0C01 /* SMBuilder */,
-				200A7F8F196DB68E005B0C01 /* SMBuilderTests */,
 				200A7F78196DB68E005B0C01 /* Frameworks */,
 				200A7F77196DB68E005B0C01 /* Products */,
 			);
@@ -92,7 +168,6 @@
 			isa = PBXGroup;
 			children = (
 				200A7F76196DB68E005B0C01 /* libSMBuilder.a */,
-				200A7F86196DB68E005B0C01 /* SMBuilderTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -100,6 +175,7 @@
 		200A7F78196DB68E005B0C01 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				200A805B196DB7D7005B0C01 /* CoreGraphics.framework */,
 				200A7F79196DB68E005B0C01 /* Foundation.framework */,
 				200A7F87196DB68E005B0C01 /* XCTest.framework */,
 				200A7F8A196DB68E005B0C01 /* UIKit.framework */,
@@ -110,8 +186,11 @@
 		200A7F7B196DB68E005B0C01 /* SMBuilder */ = {
 			isa = PBXGroup;
 			children = (
-				200A7F7E196DB68E005B0C01 /* SMBuilder.h */,
-				200A7F80196DB68E005B0C01 /* SMBuilder.m */,
+				200A7F9F196DB6DC005B0C01 /* entitiesFramework */,
+				200A7FCE196DB6DC005B0C01 /* Monosyne */,
+				200A7FD1196DB6DC005B0C01 /* stmBuilder */,
+				200A7FD6196DB6DC005B0C01 /* stmLang */,
+				200A7FDC196DB6DC005B0C01 /* world */,
 				200A7F7C196DB68E005B0C01 /* Supporting Files */,
 			);
 			path = SMBuilder;
@@ -125,22 +204,162 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		200A7F8F196DB68E005B0C01 /* SMBuilderTests */ = {
+		200A7F9F196DB6DC005B0C01 /* entitiesFramework */ = {
 			isa = PBXGroup;
 			children = (
-				200A7F95196DB68E005B0C01 /* SMBuilderTests.m */,
-				200A7F90196DB68E005B0C01 /* Supporting Files */,
+				200A7FA0196DB6DC005B0C01 /* Entities */,
+				200A7FAB196DB6DC005B0C01 /* FastString.h */,
+				200A7FAC196DB6DC005B0C01 /* FastString.m */,
+				200A7FAD196DB6DC005B0C01 /* GameComponent.h */,
+				200A7FAE196DB6DC005B0C01 /* GameComponent.m */,
+				200A7FAF196DB6DC005B0C01 /* GameComponentCollection.h */,
+				200A7FB0196DB6DC005B0C01 /* GameComponentCollection.m */,
+				200A7FB1196DB6DC005B0C01 /* GameTime.h */,
+				200A7FB2196DB6DC005B0C01 /* GameTime.m */,
+				200A7FB3196DB6DC005B0C01 /* IArrayHolder.h */,
+				200A7FB4196DB6DC005B0C01 /* IDataHolder.h */,
+				200A7FB5196DB6DC005B0C01 /* IDataHolder.m */,
+				200A7FB6196DB6DC005B0C01 /* IDrawable.h */,
+				200A7FB7196DB6DC005B0C01 /* IGameComponent.h */,
+				200A7FB8196DB6DC005B0C01 /* IUpdatable.h */,
+				200A7FB9196DB6DC005B0C01 /* IUpdateable.h */,
+				200A7FBA196DB6DC005B0C01 /* SetArray.h */,
+				200A7FBB196DB6DC005B0C01 /* SetArray.m */,
+				200A7FBC196DB6DC005B0C01 /* Signals */,
 			);
-			path = SMBuilderTests;
+			path = entitiesFramework;
 			sourceTree = "<group>";
 		};
-		200A7F90196DB68E005B0C01 /* Supporting Files */ = {
+		200A7FA0196DB6DC005B0C01 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				200A7F91196DB68E005B0C01 /* SMBuilderTests-Info.plist */,
-				200A7F92196DB68E005B0C01 /* InfoPlist.strings */,
+				200A7FA1196DB6DC005B0C01 /* AbstractSystem.h */,
+				200A7FA2196DB6DC005B0C01 /* AbstractSystem.m */,
+				200A7FA3196DB6DC005B0C01 /* Engine.h */,
+				200A7FA4196DB6DC005B0C01 /* Engine.m */,
+				200A7FA5196DB6DC005B0C01 /* Entity.h */,
+				200A7FA6196DB6DC005B0C01 /* Entity.m */,
+				200A7FA7196DB6DC005B0C01 /* Filter.h */,
+				200A7FA8196DB6DC005B0C01 /* Filter.m */,
+				200A7FA9196DB6DC005B0C01 /* Index.h */,
+				200A7FAA196DB6DC005B0C01 /* Index.m */,
 			);
-			name = "Supporting Files";
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		200A7FBC196DB6DC005B0C01 /* Signals */ = {
+			isa = PBXGroup;
+			children = (
+				200A7FBD196DB6DC005B0C01 /* ListenerNode.h */,
+				200A7FBE196DB6DC005B0C01 /* ListenerNode.m */,
+				200A7FBF196DB6DC005B0C01 /* ListenerNodePool.h */,
+				200A7FC0196DB6DC005B0C01 /* ListenerNodePool.m */,
+				200A7FC1196DB6DC005B0C01 /* Signal0.h */,
+				200A7FC2196DB6DC005B0C01 /* Signal0.m */,
+				200A7FC3196DB6DC005B0C01 /* Signal1.h */,
+				200A7FC4196DB6DC005B0C01 /* Signal1.m */,
+				200A7FC5196DB6DC005B0C01 /* Signal2.h */,
+				200A7FC6196DB6DC005B0C01 /* Signal2.m */,
+				200A7FC7196DB6DC005B0C01 /* Signal3.h */,
+				200A7FC8196DB6DC005B0C01 /* Signal3.m */,
+				200A7FC9196DB6DC005B0C01 /* SignalAny.h */,
+				200A7FCA196DB6DC005B0C01 /* SignalAny.m */,
+				200A7FCB196DB6DC005B0C01 /* SignalBase.h */,
+				200A7FCC196DB6DC005B0C01 /* SignalBase.m */,
+				200A7FCD196DB6DC005B0C01 /* Signals.h */,
+			);
+			path = Signals;
+			sourceTree = "<group>";
+		};
+		200A7FCE196DB6DC005B0C01 /* Monosyne */ = {
+			isa = PBXGroup;
+			children = (
+				200A7FCF196DB6DC005B0C01 /* Entities */,
+				200A7FD0196DB6DC005B0C01 /* Signals */,
+			);
+			path = Monosyne;
+			sourceTree = "<group>";
+		};
+		200A7FCF196DB6DC005B0C01 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		200A7FD0196DB6DC005B0C01 /* Signals */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Signals;
+			sourceTree = "<group>";
+		};
+		200A7FD1196DB6DC005B0C01 /* stmBuilder */ = {
+			isa = PBXGroup;
+			children = (
+				200A7FD2196DB6DC005B0C01 /* SMReader+InternalAPI.h */,
+				200A7FD3196DB6DC005B0C01 /* SMReader+InternalAPI.m */,
+				200A7FD4196DB6DC005B0C01 /* SMReader.h */,
+				200A7FD5196DB6DC005B0C01 /* SMReader.m */,
+			);
+			path = stmBuilder;
+			sourceTree = "<group>";
+		};
+		200A7FD6196DB6DC005B0C01 /* stmLang */ = {
+			isa = PBXGroup;
+			children = (
+				200A7FD7196DB6DC005B0C01 /* lang.lm */,
+				200A7FD8196DB6DC005B0C01 /* lang.ym */,
+				200A7FD9196DB6DC005B0C01 /* NodeType.h */,
+				200A7FDA196DB6DC005B0C01 /* SMBuilderMediator.h */,
+				200A7FDB196DB6DC005B0C01 /* SMBuilderMediator.m */,
+			);
+			path = stmLang;
+			sourceTree = "<group>";
+		};
+		200A7FDC196DB6DC005B0C01 /* world */ = {
+			isa = PBXGroup;
+			children = (
+				200A7FDD196DB6DC005B0C01 /* SM.h */,
+				200A7FDE196DB6DC005B0C01 /* SM.m */,
+				200A7FDF196DB6DC005B0C01 /* SMStateDescription.h */,
+				200A7FE0196DB6DC005B0C01 /* SMStateDescription.m */,
+				200A7FE1196DB6DC005B0C01 /* SMTransition.h */,
+				200A7FE2196DB6DC005B0C01 /* SMTransition.m */,
+				200A7FE3196DB6DC005B0C01 /* world */,
+			);
+			path = world;
+			sourceTree = "<group>";
+		};
+		200A7FE3196DB6DC005B0C01 /* world */ = {
+			isa = PBXGroup;
+			children = (
+				200A7FE4196DB6DC005B0C01 /* ComponentsFactory.h */,
+				200A7FE5196DB6DC005B0C01 /* ComponentsFactory.m */,
+				200A7FE6196DB6DC005B0C01 /* layers */,
+				200A7FF1196DB6DC005B0C01 /* SMEntity.h */,
+				200A7FF2196DB6DC005B0C01 /* SMEntity.m */,
+				200A7FF3196DB6DC005B0C01 /* World.h */,
+				200A7FF4196DB6DC005B0C01 /* World.m */,
+			);
+			path = world;
+			sourceTree = "<group>";
+		};
+		200A7FE6196DB6DC005B0C01 /* layers */ = {
+			isa = PBXGroup;
+			children = (
+				200A7FE7196DB6DC005B0C01 /* PlaneEntity.h */,
+				200A7FE8196DB6DC005B0C01 /* PlaneEntity.m */,
+				200A7FE9196DB6DC005B0C01 /* PlaneStateDescription.h */,
+				200A7FEA196DB6DC005B0C01 /* PlaneStateDescription.m */,
+				200A7FEB196DB6DC005B0C01 /* PlaneWorld.h */,
+				200A7FEC196DB6DC005B0C01 /* PlaneWorld.m */,
+				200A7FED196DB6DC005B0C01 /* SMEffect.h */,
+				200A7FEE196DB6DC005B0C01 /* SMEffect.m */,
+				200A7FEF196DB6DC005B0C01 /* SMLayer.h */,
+				200A7FF0196DB6DC005B0C01 /* SMLayer.m */,
+			);
+			path = layers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,24 +381,6 @@
 			productName = SMBuilder;
 			productReference = 200A7F76196DB68E005B0C01 /* libSMBuilder.a */;
 			productType = "com.apple.product-type.library.static";
-		};
-		200A7F85196DB68E005B0C01 /* SMBuilderTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 200A7F9C196DB68E005B0C01 /* Build configuration list for PBXNativeTarget "SMBuilderTests" */;
-			buildPhases = (
-				200A7F82196DB68E005B0C01 /* Sources */,
-				200A7F83196DB68E005B0C01 /* Frameworks */,
-				200A7F84196DB68E005B0C01 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				200A7F8D196DB68E005B0C01 /* PBXTargetDependency */,
-			);
-			name = SMBuilderTests;
-			productName = SMBuilderTests;
-			productReference = 200A7F86196DB68E005B0C01 /* SMBuilderTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -203,59 +404,54 @@
 			projectRoot = "";
 			targets = (
 				200A7F75196DB68E005B0C01 /* SMBuilder */,
-				200A7F85196DB68E005B0C01 /* SMBuilderTests */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		200A7F84196DB68E005B0C01 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				200A7F94196DB68E005B0C01 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		200A7F72196DB68E005B0C01 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				200A7F81196DB68E005B0C01 /* SMBuilder.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		200A7F82196DB68E005B0C01 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				200A7F96196DB68E005B0C01 /* SMBuilderTests.m in Sources */,
+				200A804B196DB761005B0C01 /* ListenerNode.m in Sources */,
+				200A804D196DB761005B0C01 /* ListenerNodePool.m in Sources */,
+				200A804F196DB761005B0C01 /* Signal0.m in Sources */,
+				200A8051196DB761005B0C01 /* Signal1.m in Sources */,
+				200A8053196DB761005B0C01 /* Signal2.m in Sources */,
+				200A8055196DB761005B0C01 /* Signal3.m in Sources */,
+				200A8057196DB761005B0C01 /* SignalAny.m in Sources */,
+				200A8059196DB761005B0C01 /* SignalBase.m in Sources */,
+				200A8030196DB75B005B0C01 /* AbstractSystem.m in Sources */,
+				200A8032196DB75B005B0C01 /* Engine.m in Sources */,
+				200A8034196DB75B005B0C01 /* Entity.m in Sources */,
+				200A8036196DB75B005B0C01 /* Filter.m in Sources */,
+				200A8038196DB75B005B0C01 /* Index.m in Sources */,
+				200A803A196DB75B005B0C01 /* FastString.m in Sources */,
+				200A803C196DB75B005B0C01 /* GameComponent.m in Sources */,
+				200A803E196DB75B005B0C01 /* GameComponentCollection.m in Sources */,
+				200A8040196DB75B005B0C01 /* GameTime.m in Sources */,
+				200A8043196DB75B005B0C01 /* IDataHolder.m in Sources */,
+				200A8049196DB75B005B0C01 /* SetArray.m in Sources */,
+				200A801D196DB6FE005B0C01 /* PlaneEntity.m in Sources */,
+				200A801F196DB6FE005B0C01 /* PlaneStateDescription.m in Sources */,
+				200A8021196DB6FE005B0C01 /* PlaneWorld.m in Sources */,
+				200A8023196DB6FE005B0C01 /* SMEffect.m in Sources */,
+				200A8025196DB6FE005B0C01 /* SMLayer.m in Sources */,
+				200A8027196DB6FE005B0C01 /* SMEntity.m in Sources */,
+				200A8029196DB6FE005B0C01 /* World.m in Sources */,
+				200A8018196DB6EE005B0C01 /* SMTransition.m in Sources */,
+				200A8019196DB6F0005B0C01 /* SMStateDescription.m in Sources */,
+				200A801B196DB6F6005B0C01 /* ComponentsFactory.m in Sources */,
+				200A801A196DB6F1005B0C01 /* SM.m in Sources */,
+				200A802A196DB712005B0C01 /* lang.lm in Sources */,
+				200A802B196DB712005B0C01 /* lang.ym in Sources */,
+				200A802C196DB712005B0C01 /* SMBuilderMediator.m in Sources */,
+				200A802D196DB716005B0C01 /* SMReader+InternalAPI.m in Sources */,
+				200A802E196DB719005B0C01 /* SMReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		200A7F8D196DB68E005B0C01 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 200A7F75196DB68E005B0C01 /* SMBuilder */;
-			targetProxy = 200A7F8C196DB68E005B0C01 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		200A7F92196DB68E005B0C01 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				200A7F93196DB68E005B0C01 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		200A7F97196DB68E005B0C01 /* Debug */ = {
@@ -350,42 +546,6 @@
 			};
 			name = Release;
 		};
-		200A7F9D196DB68E005B0C01 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SMBuilder/SMBuilder-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "SMBuilderTests/SMBuilderTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		200A7F9E196DB68E005B0C01 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SMBuilder/SMBuilder-Prefix.pch";
-				INFOPLIST_FILE = "SMBuilderTests/SMBuilderTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -403,14 +563,6 @@
 			buildConfigurations = (
 				200A7F9A196DB68E005B0C01 /* Debug */,
 				200A7F9B196DB68E005B0C01 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
-		200A7F9C196DB68E005B0C01 /* Build configuration list for PBXNativeTarget "SMBuilderTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				200A7F9D196DB68E005B0C01 /* Debug */,
-				200A7F9E196DB68E005B0C01 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
