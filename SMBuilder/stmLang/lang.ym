@@ -7,7 +7,7 @@
     int yylex(void);
     void yyerror(char *);
     void yylog(char *);
-
+    
 %}
 
 %union {
@@ -110,7 +110,7 @@ decl:
     | prop LE expr                              {$$ = leafCall(signLE,$1,$3);}
     | prop IN range                             {$$ = leafCall(signINRANGE,$1,$3);}
     | prop IN array                             {$$ = leafCall(signIN,$1,$3);}
-    | TOKEN ':' TOKEN                           {$$ = leafCall(signINHERIT,$1,[NSString stringWithUTF8String:$3]);}
+    | TOKEN ':' TOKEN                           {$$ = leafCall(signINHERIT,$1,__retained [NSString stringWithUTF8String:$3]);}
     | NOT '(' decl ')'                          {$$ = mathCall(signNOT,$3,NULL);}
     | PLUS TOKEN '{' decl_list '}'              {
                                                     addComponent($2);
@@ -131,7 +131,7 @@ expr:
 ;
 
 range:
-    '(' NUMBER ',' NUMBER ')'                   {$$ = [NSArray arrayWithObjects:$2,$4,nil];}
+    '(' NUMBER ',' NUMBER ')'                   {$$ = __retained [NSArray arrayWithObjects:$2,$4,nil];}
 ;
 
 array:
@@ -145,19 +145,19 @@ effect:
 ;
 
 number_list:
-    NUMBER                                      {$$ = [NSMutableArray arrayWithObjects:$1,nil];}
+    NUMBER                                      {$$ = __retained [NSMutableArray arrayWithObjects:$1,nil];}
     | number_list ',' NUMBER                    {[((NSMutableArray*)$1) addObject:$3];}
 ;
 
 NUMBER:
-    INTEGER                                     {$$ = [NSNumber numberWithInt:$1];}
-    | DOUBLE                                    {$$ = [NSNumber numberWithDouble:$1];}
-    | MINUS NUMBER                              {$$ = [NSNumber numberWithDouble:-[$2 doubleValue]];}
+    INTEGER                                     {$$ = __retained [NSNumber numberWithInt:$1];}
+    | DOUBLE                                    {$$ = __retained [NSNumber numberWithDouble:$1];}
+    | MINUS NUMBER                              {$$ = __retained [NSNumber numberWithDouble:-[$2 doubleValue]];}
     | PLUS NUMBER                               {$$ = $2;}
 ;
 
 string_val:
-    STRING                                      {$$ = [NSString stringWithUTF8String:$1];
+    STRING                                      {$$ = __retained [NSString stringWithUTF8String:$1];
                                                  $$ = [$$ stringByReplacingOccurrencesOfString:@"\"" withString:@""];}
 ;
 

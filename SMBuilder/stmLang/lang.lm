@@ -14,7 +14,7 @@ newline     \n
 strchar     ([ ~]|\\n)
 identifier  {ichar}([0-9]|{ichar})*
 whitespace  [ \t]+
-float       ([+-]?{digit}+)?\.{digit}*(e?[+-]?{digit}+)?
+float       [+-]?({digit}+\.{digit}*)
 chrliteral  '([!*]|\\n)'
 nullstring  \"\"
 escquote    [^"]*\\\"[^"]*
@@ -51,6 +51,8 @@ strliteral  \"[^"]*{escquote}*\"
 {ichar}+        {yylval.textValue = strdup(yytext); return TOKEN;}
 
 {integer}       {yylval.intValue = atoi(yytext); return INTEGER;}
+
+{float}         {yylval.doubleValue = atof(yytext); return DOUBLE; }
 
 {strliteral}    {yylval.textValue = strdup(yytext); return STRING;}
 

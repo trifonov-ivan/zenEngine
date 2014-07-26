@@ -77,18 +77,24 @@ static SMReader *sharedReader = nil;
     }
     NSString *str = [NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:nil];
     ;
-    yy_switch_to_buffer(yy_scan_string([str UTF8String]));
-//    yydebug = 1;
-    yyparse();
+    NSLog(@"readed content with lenght %lud from %@", (unsigned long)str.length, file);
+    if (str.length > 0)
+    {
+        yy_switch_to_buffer(yy_scan_string([str UTF8String]));
+//      yydebug = 1;
+        yyparse();
+    }
 }
 
 -(void) registerSM:(NSString*) name
 {
+    NSLog(@"process SM: %@",name);
     actualSM = self.world.getSMs[name];
     if (!actualSM)
     {
         actualSM = [[SM alloc] init];
         [self.world registerSM:actualSM ForKey:name];
+        NSLog(@"this SM is absent. create new");
     }
 }
 
@@ -110,16 +116,20 @@ static SMReader *sharedReader = nil;
     if ([self.world isKindOfClass:[PlaneWorld class]])
     {
         Class stClass = layer ? NSClassFromString(layer) : [SMLayer class];
-        SMLayer *layer = [[stClass alloc] init];
-        [((PlaneWorld*)self.world) registerLayer:layer forName:name];
+        SMLayer *layerInstance = [[stClass alloc] init];
+        layerInstance.name = name;
+        [((PlaneWorld*)self.world) registerLayer:layerInstance forName:name];
+        NSLog(@"registering layer: %@ : %@",name, layer ? layer : @"SMLayer");
     }
 }
 
 -(void) registerState:(NSString*) name forStateClass:(NSString*) stateClass
 {
+    NSLog(@"registering state: %@",name);
     Class stClass = stateClass ? NSClassFromString(stateClass) : basicStateClass;
     if ([actualSM descriptionForKey:name])
     {
+        NSLog(@"exists");
         actualState = [actualSM descriptionForKey:name];
         return;
     }
@@ -148,6 +158,7 @@ static SMReader *sharedReader = nil;
 
 -(void) addEffectToLayer:(NSString*) name
 {
+    NSLog(@"adding effect to layer %@",name);
     actualEffect = [[SMEffect alloc] init];
     actualEffect.name = name;
     ((PlaneStateDescription*)actualState).effects[name] = actualEffect;
@@ -167,6 +178,7 @@ static SMReader *sharedReader = nil;
         {
             actualEffect.data = effect;
             actualEffect.size = CGSizeMake(size, size);
+            actualEffect.anchorPoint = CGPointMake((int)(size-1)/2, (size-1)/2);
             return;
         }
         
@@ -176,6 +188,7 @@ static SMReader *sharedReader = nil;
                              inArray:size :effect];
             free(actualEffect.data);
             actualEffect.data = effect;
+            actualEffect.size = CGSizeMake(size, size);
         }
         else
         {
@@ -183,6 +196,7 @@ static SMReader *sharedReader = nil;
                              inArray:actualEffect.size.width :actualEffect.data];
             free(effect);
         }
+        actualEffect.anchorPoint = CGPointMake((int)(actualEffect.size.width-1)/2, (actualEffect.size.width-1)/2);
     }
 }
 
@@ -208,6 +222,7 @@ static SMReader *sharedReader = nil;
 
 -(void) registerTransitionFrom:(NSString*) from to:(NSString*) to
 {
+    NSLog(@"%@ -> %@",from,to);
     NSString *stringKey = [NSString stringWithFormat:@"%@-%@",from,to];
     SMTransition *transition = transitions[stringKey];
     if (!transition)
@@ -251,16 +266,19 @@ static SMReader *sharedReader = nil;
 
 -(void) setTransitionEvent:(NSString*) event
 {
+    NSLog(@"fired on Event: %@",event);
     actualTran.event = event;
 }
 
 -(void) addComponent:(NSString*) name
 {
+    NSLog(@"add component with name %@",name);
     actualComponentName = [self.componentsFactoryClass componentNameForString:name];
     actualComponent = [self.componentsFactoryClass blankComponentForName:actualComponentName];
 }
 -(void) removeComponent:(NSString*) name
 {
+    NSLog(@"remove component with name %@",name);
     switch (actualStateState) {
         case SSK_ENTER:
         {
@@ -338,17 +356,20 @@ static SMReader *sharedReader = nil;
                     data = data ? data : node->leaf.value;
                     @try
                     {
-                        [self setValue:data forKey:node->leaf.prop];
+                        NSLog(@"set value: %@ for key: %@",data, node->leaf.prop);
+                        [object setValue:data forKey:node->leaf.prop];
                     }
                     @catch (NSException * e)
                     {
+                        NSLog(@"key did not exists:%@ for Object:%@",node->leaf.prop,object);
                         @try
                         {
-                            [object setValue:data forKey:node->leaf.prop];
+                            NSLog(@"set value: %@ for key: %@",data, node->leaf.prop);
+                            [self setValue:data forKey:node->leaf.prop];
                         }
                         @catch (NSException * e)
                         {
-                            NSLog(@"key did not exists:%@ for Object:%@",node->leaf.prop,object);
+                            NSLog(@"failed. No such global property");
                         }
                     }
                 }

@@ -528,9 +528,11 @@
 				DSTROOT = /tmp/SMBuilder.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SMBuilder/SMBuilder-Prefix.pch";
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				YACCFLAGS = "";
 			};
 			name = Debug;
 		};
@@ -540,9 +542,11 @@
 				DSTROOT = /tmp/SMBuilder.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SMBuilder/SMBuilder-Prefix.pch";
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				YACCFLAGS = "";
 			};
 			name = Release;
 		};
@@ -565,6 +569,7 @@
 				200A7F9B196DB68E005B0C01 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -80,7 +80,7 @@ nodeType* leafCall(int sign, char *leftOperand, id rightOperand)
     nodeType *node = (nodeType*)malloc(sizeof(nodeType));
     node->type = typeLeaf;
     node->leaf.sign = sign;
-    node->leaf.prop = STR(leftOperand);
+    node->leaf.prop = __retained(STR(leftOperand));
     node->leaf.value = rightOperand;
     return node;
 }
