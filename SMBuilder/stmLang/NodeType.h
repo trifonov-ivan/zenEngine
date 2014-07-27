@@ -9,7 +9,7 @@
 #ifndef SMBuilder_NodeType_h
 #define SMBuilder_NodeType_h
 
-typedef enum { signLT, signMT, signLE, signME, signEQ, signAND, signOR, signMINUS, signPLUS, signMULTIPLY, signDIVIDE, signSET, signIN, signINRANGE, signNOT, signINHERIT } signEnum;
+typedef enum { signLT, signMT, signLE, signME, signEQ, signAND, signOR, signMINUS, signPLUS, signMULTIPLY, signDIVIDE, signSET, signIN, signINRANGE, signNOT, signINHERIT, signRANDOM } signEnum;
 
 typedef enum {typeMath, typeOperational, typeLeaf} calcNodeType;
 
@@ -17,10 +17,12 @@ typedef struct {
     struct nodeTypeTag *left;
     struct nodeTypeTag *right;
     signEnum sign;
+    __unsafe_unretained id value;
 } mathNode;
 
 typedef struct {
     __unsafe_unretained NSString *prop;
+    struct nodeTypeTag *left;
     __unsafe_unretained id value;
     signEnum sign;
 } leafNode;

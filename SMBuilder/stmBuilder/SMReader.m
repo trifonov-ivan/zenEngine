@@ -341,7 +341,7 @@ static SMReader *sharedReader = nil;
     switch (node->type) {
         case typeLeaf:
         {
-            switch (node->opr.sign) {
+            switch (node->leaf.sign) {
                 case signINHERIT:
                 {
                     data = NSClassFromString(node->leaf.value);
@@ -384,6 +384,30 @@ static SMReader *sharedReader = nil;
     }
 }
 
+-(id) mathExpressionResult: (nodeType *) node :(SMEntity*)entity :(SMTransition*)transition
+{
+    switch (node->type) {
+        case typeMath:
+        {
+            switch (node->opr.sign) {
+                case signRANDOM:
+                {
+                    nodeType *source = node->opr.left;
+                    int limitConst = [source->leaf.value intValue];
+                    node->opr.value = __retained @(arc4random()%limitConst);
+                }
+                    break;
+                default:
+                    break;
+            }
+        }
+            break;
+        default:
+            break;
+    }
+    return node->opr.value;
+}
+
 -(BOOL) executionResult: (nodeList*) list :(SMEntity*)entity :(SMTransition*)transition
 {
     nodeList *anListObject = list;
@@ -421,7 +445,6 @@ static SMReader *sharedReader = nil;
                             node = node->opr.left;
                             goto reswitch;//oh god NOOOOOOOOOOOO
                             break;
-                            
                         default:
                             break;
                     }
@@ -434,16 +457,21 @@ static SMReader *sharedReader = nil;
                     NSNumber *currentProp;
                     //TODO: need to totally investigate at props methods
                     NSString *propName = node->leaf.prop;
-                    
-                    @try
+                    if (!propName)
                     {
-                        currentProp = [entity valueForKey:propName];
+                        currentProp = [self mathExpressionResult:node->leaf.left :entity :transition];
                     }
-                    @catch (NSException * e)
+                    else
                     {
-                        NSAssert(true,@"value does not exists for key:%@ at transition %@",propName,transition);
+                        @try
+                        {
+                            currentProp = [entity valueForKey:propName];
+                        }
+                        @catch (NSException * e)
+                        {
+                            NSAssert(true,@"value does not exists for key:%@ at transition %@",propName,transition);
+                        }
                     }
-
                     id val = node->leaf.value;
                     switch (node->leaf.sign) {
                         case signEQ:
@@ -496,7 +524,7 @@ static SMReader *sharedReader = nil;
         }
         anListObject = anListObject->next;
     }
-
+    globalResult |= localResult;
     return globalResult;
 }
 

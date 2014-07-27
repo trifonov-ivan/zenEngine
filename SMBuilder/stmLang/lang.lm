@@ -48,6 +48,8 @@ strliteral  \"[^"]*{escquote}*\"
 
 "addList"       return ADD_LIST;
 
+"random"        return RANDOM;
+
 {ichar}+        {yylval.textValue = strdup(yytext); return TOKEN;}
 
 {integer}       {yylval.intValue = atoi(yytext); return INTEGER;}

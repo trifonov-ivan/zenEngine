@@ -82,6 +82,18 @@ nodeType* leafCall(int sign, char *leftOperand, id rightOperand)
     node->leaf.sign = sign;
     node->leaf.prop = __retained(STR(leftOperand));
     node->leaf.value = rightOperand;
+    node->leaf.left = NULL;
+    return node;
+}
+
+nodeType* leafMathCall(int sign, nodeType *leftOperand, id rightOperand)
+{
+    nodeType *node = (nodeType*)malloc(sizeof(nodeType));
+    node->type = typeLeaf;
+    node->leaf.sign = sign;
+    node->leaf.prop = nil;
+    node->leaf.value = rightOperand;
+    node->leaf.left = leftOperand;
     return node;
 }
 
