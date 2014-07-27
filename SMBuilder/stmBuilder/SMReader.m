@@ -476,6 +476,23 @@ static SMReader *sharedReader = nil;
 -(id) mathExpressionResult: (nodeType *) node :(SMEntity*)entity :(SMTransition*)transition
 {
     switch (node->type) {
+        case typeLeaf:
+        {
+            NSString *propName = node->leaf.prop;
+            if (!propName)
+                return node->leaf.value;
+            
+            @try
+            {
+                id currentProp = [entity valueForKey:propName];
+                return currentProp;
+            }
+            @catch (NSException * e)
+            {
+                NSAssert(true,@"value does not exists for key:%@ at transition %@",propName,transition);
+                return nil;
+            }
+        }
         case typeMath:
         {
             switch (node->opr.sign) {
@@ -484,6 +501,34 @@ static SMReader *sharedReader = nil;
                     nodeType *source = node->opr.left;
                     int limitConst = [source->leaf.value intValue];
                     node->opr.value = __retained @(arc4random()%limitConst);
+                }
+                    break;
+                case signPLUS:
+                {
+                    NSNumber *left = [self mathExpressionResult:node->opr.left :entity :transition];
+                    NSNumber *right = [self mathExpressionResult:node->opr.right :entity :transition];
+                    node->opr.value = @([left doubleValue] + [right doubleValue]);
+                }
+                    break;
+                case signMINUS:
+                {
+                    NSNumber *left = [self mathExpressionResult:node->opr.left :entity :transition];
+                    NSNumber *right = [self mathExpressionResult:node->opr.right :entity :transition];
+                    node->opr.value = @([left doubleValue] - [right doubleValue]);
+                }
+                    break;
+                case signMULTIPLY:
+                {
+                    NSNumber *left = [self mathExpressionResult:node->opr.left :entity :transition];
+                    NSNumber *right = [self mathExpressionResult:node->opr.right :entity :transition];
+                    node->opr.value = @([left doubleValue] * [right doubleValue]);
+                }
+                    break;
+                case signDIVIDE:
+                {
+                    NSNumber *left = [self mathExpressionResult:node->opr.left :entity :transition];
+                    NSNumber *right = [self mathExpressionResult:node->opr.right :entity :transition];
+                    node->opr.value = @([left doubleValue] / [right doubleValue]);
                 }
                     break;
                 default:

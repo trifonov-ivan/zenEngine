@@ -60,6 +60,8 @@ strliteral  \"[^"]*{escquote}*\"
 
 {strliteral}    {yylval.textValue = strdup(yytext); return STRING;}
 
+{comment}       ;
+
 "="             return EQ;
 
 ">"             return MT;
@@ -74,9 +76,11 @@ strliteral  \"[^"]*{escquote}*\"
 
 "-"             return MINUS;
 
-[:{};.,()]      {return *yytext;}
+"*"             return MULTIPLY;
 
-{comment}       ;
+"/"             return DIVIDE;
+
+[:{};.,()]      {return *yytext;}
 
 [ \t\n]         ;
 
