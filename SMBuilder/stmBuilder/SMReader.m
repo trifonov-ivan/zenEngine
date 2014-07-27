@@ -30,7 +30,7 @@ YY_BUFFER_STATE yy_scan_string (const char *);
     NSArray *actualTranPool;
     transitionStateKey actualTransitionState;
     NSMutableDictionary *transitions;
-    
+    NSMutableDictionary *stateInheritanceMap;
     SMStateDescription *actualState;
     stateStateKey actualStateState;
     
@@ -65,6 +65,7 @@ static SMReader *sharedReader = nil;
     if (self) {
         basicStateClass = [SMStateDescription class];
         transitions = [NSMutableDictionary new];
+        stateInheritanceMap = [NSMutableDictionary new];
     }
     return self;
 }
@@ -125,15 +126,40 @@ static SMReader *sharedReader = nil;
 
 -(void) registerState:(NSString*) name forStateClass:(NSString*) stateClass
 {
-    NSLog(@"registering state: %@",name);
-    Class stClass = stateClass ? NSClassFromString(stateClass) : basicStateClass;
+    NSAssert(name,@"name should not be nil");
     if ([actualSM descriptionForKey:name])
     {
         NSLog(@"exists");
         actualState = [actualSM descriptionForKey:name];
         return;
     }
-    SMStateDescription* state = [stClass stateDescriptionForKey:name];
+    NSLog(@"registering state: %@",name);
+    if (stateClass)
+        NSLog(@"inherits from %@",stateClass);
+    Class stClass = stateClass ? NSClassFromString(stateClass) : basicStateClass;
+
+    SMStateDescription *state = nil;;
+    if (!stClass) /* class lookup failed. trying to inherit from exist state*/
+    {
+        SMStateDescription *baseDescript = [actualSM descriptionForKey:stateClass];
+        if (baseDescript)
+        {
+            if (!stateInheritanceMap[stateClass])
+            {
+                stateInheritanceMap[stateClass] = [NSMutableArray new];
+            }
+            state = [[baseDescript class] stateDescriptionForKey:name];
+            [stateInheritanceMap[stateClass] addObject:name];
+        }
+        else
+        {
+            NSLog(@"no such basic state.");
+        }
+    }
+    else
+    {
+        state = [stClass stateDescriptionForKey:name];
+    }
     [actualSM addState:state];
     actualState = state;
 }
@@ -146,6 +172,14 @@ static SMReader *sharedReader = nil;
         if (anListObject->content != NULL)
         {
             [self attachNodeProperty:anListObject->content toId:actualState];
+            for (NSString *stateName in stateInheritanceMap[actualState.key])
+            {
+                SMStateDescription *state = [actualSM descriptionForKey:stateName];
+                if (state)
+                {
+                    [self attachNodeProperty:anListObject->content toId:state];
+                }
+            }
         }
         anListObject = anListObject->next;
     }
@@ -184,6 +218,15 @@ static SMReader *sharedReader = nil;
     actualEffect = [[SMEffect alloc] init];
     actualEffect.name = name;
     ((PlaneStateDescription*)actualState).effects[name] = actualEffect;
+    for (NSString *stateName in stateInheritanceMap[actualState.key])
+    {
+        SMStateDescription *state = [actualSM descriptionForKey:stateName];
+        if (state)
+        {
+            ((PlaneStateDescription*)state).effects[name] = actualEffect;
+        }
+    }
+
 }
 
 -(void) addListToEffect:(NSArray*) list

@@ -75,7 +75,7 @@ state:
 
 state_def:
     TOKEN                                       {registerState($1,NULL);checkFillingState(SSK_COMMON);}
-    | TOKEN ':' TOKEN                           {registerState($1,NULL);checkFillingState(SSK_COMMON);}
+    | TOKEN ':' TOKEN                           {registerState($1,$3);checkFillingState(SSK_COMMON);}
     | '(' state_def ')'                         {/*nothing to do*/}
     | state_def '.' ENTER_MODIFIER              {
                                                     checkFillingState(SSK_ENTER);
