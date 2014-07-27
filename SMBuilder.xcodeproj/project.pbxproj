@@ -532,7 +532,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				YACCFLAGS = "";
+				YACCFLAGS = "-v -d -t";
 			};
 			name = Debug;
 		};
@@ -546,7 +546,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				YACCFLAGS = "";
+				YACCFLAGS = "-v -d -t";
 			};
 			name = Release;
 		};

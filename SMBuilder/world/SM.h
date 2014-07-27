@@ -24,22 +24,25 @@
 
 -(void) addGroup:(NSString*)groupName;
 -(void) addState:(SMStateDescription*) description toGroup:(NSString*)groupName;
--(void) addTransition:(SMTransition*)transition
-            fromGroup:(NSString*) fromGroupKey
-              toState:(NSString*)toKey;
+
+-(NSArray*) addTransition:(SMTransition*)transition
+                fromGroup:(NSString*) fromGroupKey
+                  toState:(NSString*)toKey;
 
 
--(void) addTransition:(SMTransition*)transition
-              fromState:(NSString*)fromKey
-                toGroup:(NSString*) toGroupKey;
+-(NSArray*) addTransition:(SMTransition*)transition
+                fromState:(NSString*)fromKey
+                  toGroup:(NSString*) toGroupKey;
+
+-(NSArray*) addTransition:(SMTransition *)transition
+                fromGroup:(NSString*)fromGroupKey
+                  toGroup:(NSString*)toGroupKey;
 
 -(BOOL) isState:(SMStateDescription*) description
         inGroup:(NSString*)group;
+
+-(BOOL) isGroupExists:(NSString*) group;
 //TODO: sometime need to make this
-//-(void) addTransition:(SMTransition*)transition
-//            fromGroup:(NSString*) fromGroupKey
-//              toGroup:(NSString*) toGroupKey;
-//
 //-(void) removeTransition:(SMTransition*)transition;
 
 

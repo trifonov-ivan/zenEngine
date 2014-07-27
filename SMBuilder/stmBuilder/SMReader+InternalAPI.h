@@ -19,6 +19,8 @@
 
 -(void) registerState:(NSString*) name forStateClass:(NSString*) stateClass;
 -(void) processStateProps:(nodeList*) list;
+-(void) registerStateGroup:(NSArray*)group forName:(NSString*)name;
+
 -(void) checkFillingState:(stateStateKey) key;
 -(void) addEffectToLayer:(NSString*) name;
 -(void) addListToEffect:(NSArray*) list;

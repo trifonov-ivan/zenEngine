@@ -39,7 +39,7 @@
 
 %type <textValue> prop STRING
 
-%type <object> expr NUMBER array range number_list string_val
+%type <object> expr NUMBER array range number_list string_val state_list
 
 %left ':'
 
@@ -61,6 +61,7 @@ def:
     layer                                       {/*nothing to do. already done on child*/}
     | state                                     {/*nothing to do. already done on child*/}
     | transition                                {/*nothing to do. already done on child*/}
+    | state_group                               {/*nothing to do. already done on child*/}
 ;
 
 layer:
@@ -85,6 +86,16 @@ state_def:
                                                     checkTransitionFillingState(TSK_COMMON);
                                                 }
 ;
+
+state_group:
+    '#' TOKEN ':' '(' state_list ')'  {registerStateGroup($5,$2);}
+;
+
+state_list:
+    TOKEN                                       {$$ = __retained ([NSMutableArray arrayWithObjects:[NSString stringWithUTF8String:$1],nil]);}
+    | state_list ',' TOKEN                      {$$ = $1; [((NSMutableArray*)$1) addObject:[NSString stringWithUTF8String:$3]];}
+;
+
 
 transition:
     tran_descript '{' decl_list '}'             {processTranProps($3);}
@@ -159,7 +170,7 @@ effect:
 
 number_list:
     NUMBER                                      {$$ = __retained [NSMutableArray arrayWithObjects:$1,nil];}
-    | number_list ',' NUMBER                    {[((NSMutableArray*)$1) addObject:$3];}
+    | number_list ',' NUMBER                    {$$ = $1; [((NSMutableArray*)$1) addObject:$3];}
 ;
 
 NUMBER:

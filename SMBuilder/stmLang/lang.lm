@@ -24,6 +24,8 @@ strliteral  \"[^"]*{escquote}*\"
 
 "#SM:"          return OPEN_TERMINAL;
 
+"#"             return *yytext;
+
 "$"             return *yytext;
 
 "->"            return *yytext;

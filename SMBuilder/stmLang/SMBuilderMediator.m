@@ -136,6 +136,11 @@ void registerState(char *name, char *parentClass)
                              forStateClass:STR(parentClass)];
 }
 
+void registerStateGroup(NSArray *group, char *name)
+{
+    [[SMReader sharedReader] registerStateGroup:group forName:STR(name)];
+}
+
 void addEffectToLayer(char *name)
 {
     [[SMReader sharedReader] addEffectToLayer:STR(name)];

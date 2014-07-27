@@ -27,7 +27,7 @@ YY_BUFFER_STATE yy_scan_string (const char *);
 {
     SM *actualSM;
     
-    SMTransition *actualTran;
+    NSArray *actualTranPool;
     transitionStateKey actualTransitionState;
     NSMutableDictionary *transitions;
     
@@ -151,6 +151,28 @@ static SMReader *sharedReader = nil;
     }
 }
 
+-(void) registerStateGroup:(NSArray*)group forName:(NSString*)name
+{
+    if (!name)
+        return;
+    [actualSM addGroup:name];
+    NSLog(@"registered group %@",name);
+    for (NSString* stateName in group)
+    {
+        SMStateDescription *descr = [actualSM descriptionForKey:stateName];
+        if (descr)
+        {
+            [actualSM addState:descr toGroup:name];
+            NSLog(@"added state %@",stateName);
+        }
+        else
+        {
+            NSLog(@"(!) state %@ not registered",stateName);
+        }
+    }
+}
+
+
 -(void) checkFillingState:(stateStateKey) key
 {
     actualStateState = key;
@@ -227,17 +249,32 @@ static SMReader *sharedReader = nil;
     SMTransition *transition = transitions[stringKey];
     if (!transition)
     {
-        SMStateDescription *fromState = [actualSM descriptionForKey:from];
-        SMStateDescription *toState = [actualSM descriptionForKey:to];
-        if (!(fromState && toState))
+        transition = [[SMTransition alloc] init];
+        BOOL fromGroup = [actualSM isGroupExists:from];
+        BOOL toGroup = [actualSM isGroupExists:to];
+        if (fromGroup && toGroup)
         {
-            NSAssert(TRUE,@"There is no one from states %@ | %@",from, to);
+            actualTranPool = [actualSM addTransition:transition fromGroup:from toGroup:to];
+        } else if (fromGroup && !toGroup)
+        {
+            actualTranPool = [actualSM addTransition:transition fromGroup:from toState:to];
+        } else if (!fromGroup && toGroup)
+        {
+            actualTranPool = [actualSM addTransition:transition fromState:from toGroup:to];
+        } else
+        {
+            SMStateDescription *fromState = [actualSM descriptionForKey:from];
+            SMStateDescription *toState = [actualSM descriptionForKey:to];
+            if (!(fromState && toState))
+            {
+                NSAssert(TRUE,@"There is no one from states %@ | %@",from, to);
+            }
+            transition = [SMTransition transitionFrom:fromState to:toState withBlock:nil];
+            [actualSM addTransition:transition];
+            transitions[stringKey] = transition;
+            actualTranPool = @[transition];
         }
-        transition = [SMTransition transitionFrom:fromState to:toState withBlock:nil];
-        [actualSM addTransition:transition];
-        transitions[stringKey] = transition;
     }
-    actualTran = transition;
 }
 
 -(void) checkTransitionFillingState:(transitionStateKey) key
@@ -250,14 +287,20 @@ static SMReader *sharedReader = nil;
     __block SMReader *wself = self;
     switch (actualTransitionState) {
         case TSK_COMMON:
-            actualTran.completionBlock = ^BOOL(SMEntity *obj){
-                return [wself executionResult:list :obj :nil];
-            };
+            for (SMTransition *actualTran in actualTranPool)
+            {
+                actualTran.completionBlock = ^BOOL(SMEntity *obj){
+                    return [wself executionResult:list :obj :nil];
+                };
+            }
             break;
         case TSK_VALIDATION:
-            actualTran.validationBlock = ^BOOL(SMEntity *obj, SMTransition *tran){
-                return [wself executionResult:list :obj :tran];
-            };
+            for (SMTransition *actualTran in actualTranPool)
+            {
+                actualTran.validationBlock = ^BOOL(SMEntity *obj, SMTransition *tran){
+                    return [wself executionResult:list :obj :tran];
+                };
+            }
             break;
         default:
             break;
@@ -267,7 +310,10 @@ static SMReader *sharedReader = nil;
 -(void) setTransitionEvent:(NSString*) event
 {
     NSLog(@"fired on Event: %@",event);
-    actualTran.event = event;
+    for (SMTransition *actualTran in actualTranPool)
+    {
+        actualTran.event = event;
+    }
 }
 
 -(void) addComponent:(NSString*) name

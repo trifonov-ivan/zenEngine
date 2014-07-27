@@ -91,7 +91,7 @@
     [groups[groupName] addObject:description];
 }
 
--(void) addTransition:(SMTransition*)transition
+-(NSArray*) addTransition:(SMTransition*)transition
             fromGroup:(NSString*) fromGroupKey
               toState:(NSString*)toKey
 {
@@ -99,8 +99,9 @@
     if (!endPoint)
     {
         NSLog(@"ERROR:there is no state description with key %@",toKey);
-        return;
+        return nil;
     }
+    NSMutableArray *resultTrans = [NSMutableArray new];
     for (SMStateDescription *from in groups[fromGroupKey])
     {
         SMTransition *tran = [SMTransition transitionWithBlock:transition.completionBlock];
@@ -112,10 +113,12 @@
         tran.completionBlock = transition.completionBlock;
         tran.validationBlock = transition.validationBlock;
         [self addTransition:tran];
+        [resultTrans addObject:tran];
     }
+    return resultTrans;
 }
 
--(void) addTransition:(SMTransition*)transition
+-(NSArray*) addTransition:(SMTransition*)transition
             fromState:(NSString*)fromKey
               toGroup:(NSString*) toGroupKey
 {
@@ -123,8 +126,9 @@
     if (!startPoint)
     {
         NSLog(@"ERROR:there is no state description with key %@",fromKey);
-        return;
+        return nil;
     }
+    NSMutableArray *resultTrans = [NSMutableArray new];
     for (SMStateDescription *to in groups[toGroupKey])
     {
         SMTransition *tran = [SMTransition transitionWithBlock:transition.completionBlock];
@@ -137,8 +141,22 @@
         tran.validationBlock = transition.validationBlock;
 
         [self addTransition:tran];
+        [resultTrans addObject:tran];
     }
+    return resultTrans;
 
+}
+
+-(NSArray*) addTransition:(SMTransition *)transition
+            fromGroup:(NSString*)fromGroupKey
+              toGroup:(NSString*)toGroupKey
+{
+    NSMutableArray *resultTrans = [NSMutableArray new];
+    for (SMStateDescription *from in groups[fromGroupKey])
+    {
+        [resultTrans addObjectsFromArray:[self addTransition:transition fromState:from.key toGroup:toGroupKey]];
+    }
+    return resultTrans;
 }
 
 -(BOOL) isState:(SMStateDescription*) description
@@ -151,6 +169,12 @@
     }
     return NO;
 }
+
+-(BOOL) isGroupExists:(NSString*) group
+{
+    return (groups[group] != nil);
+}
+
 -(void) addMultipleStates:(NSArray*)states
 {
     for (SMStateDescription *state in states)
@@ -164,15 +188,6 @@
     {
         [self addTransition:tran];
     }
-}
-
-
-
--(void) addTransition:(SMTransition*)transition
-            fromGroup:(NSString*) fromGroupKey
-              toGroup:(NSString*) toGroupKey
-{
-    
 }
 
 -(void) removeTransition:(SMTransition*)transition

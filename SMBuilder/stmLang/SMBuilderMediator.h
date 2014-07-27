@@ -25,6 +25,8 @@ void registerLayer(char *name, char *parentClass);
 
 void registerState(char *name, char *parentClass);
 void checkFillingState(stateStateKey key);
+void registerStateGroup(NSArray *group, char *name);
+
 
 void addEffectToLayer(char *name);
 void addListToEffect(NSArray* list);
