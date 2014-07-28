@@ -70,6 +70,20 @@ static SMReader *sharedReader = nil;
     return self;
 }
 
+-(void) flush
+{
+    actualSM = nil;
+    actualTranPool = nil;
+    transitions = [NSMutableDictionary new];
+    stateInheritanceMap = [NSMutableDictionary new];
+    actualState = nil;
+    actualEffect = nil;
+    actualComponent = nil;
+    actualComponentName = nil;
+    basicStateClass = [SMStateDescription class];
+
+}
+
 -(void) processFile:(NSString *)file
 {
     if (!self.world || !self.componentsFactoryClass)
@@ -82,7 +96,7 @@ static SMReader *sharedReader = nil;
     if (str.length > 0)
     {
         yy_switch_to_buffer(yy_scan_string([str UTF8String]));
-//      yydebug = 1;
+      yydebug = 1;
         yyparse();
     }
 }
@@ -148,7 +162,7 @@ static SMReader *sharedReader = nil;
             {
                 stateInheritanceMap[stateClass] = [NSMutableArray new];
             }
-            state = [[baseDescript class] stateDescriptionForKey:name];
+            state = [[baseDescript class] stateDescriptionForKey:name fromStateMachine:actualSM];
             [stateInheritanceMap[stateClass] addObject:name];
         }
         else
@@ -158,9 +172,8 @@ static SMReader *sharedReader = nil;
     }
     else
     {
-        state = [stClass stateDescriptionForKey:name];
+        state = [stClass stateDescriptionForKey:name fromStateMachine:actualSM];
     }
-    [actualSM addState:state];
     actualState = state;
 }
 

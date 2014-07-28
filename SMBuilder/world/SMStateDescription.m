@@ -9,6 +9,7 @@
 #import "SMStateDescription.h"
 #import "SMEntity.h"
 #import "SMTransition.h"
+#import "SM.h"
 @implementation SMStateDescription
 
 - (id)init
@@ -30,6 +31,17 @@
     SMStateDescription *descr = [[self alloc] init];
     descr.key = key;
     return descr;
+}
+
++(instancetype)stateDescriptionForKey:(NSString*)key fromStateMachine:(SM*)sm
+{
+    SMStateDescription *descript = [sm descriptionForKey:key];
+    if (!descript)
+    {
+        descript = [self stateDescriptionForKey:key];
+        [sm addState:descript];
+    }
+    return descript;
 }
 
 -(void) entityLeaved:(SMEntity *)entity toState:(SMStateDescription*)state;

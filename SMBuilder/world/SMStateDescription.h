@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 @class SMEntity;
 @class SMTransition;
+@class SM;
 
 typedef BOOL (^CompletionBlock)(SMEntity *myObj);
 typedef BOOL (^ValidationBlock)(SMEntity *myObj, SMTransition *tran);
@@ -24,6 +25,7 @@ typedef BOOL (^ValidationBlock)(SMEntity *myObj, SMTransition *tran);
 
 
 +(instancetype)stateDescriptionForKey:(NSString*)key;
++(instancetype)stateDescriptionForKey:(NSString*)key fromStateMachine:(SM*)sm;
 -(instancetype)addMusicalTheme:(NSString*)themeKey;
 -(instancetype)addOnEnterBlock:(CompletionBlock)block;
 -(instancetype)addOnUpdateBlock:(CompletionBlock)block;

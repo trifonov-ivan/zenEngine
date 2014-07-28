@@ -16,4 +16,5 @@
 
 +(SMReader*) sharedReader;
 -(void) processFile:(NSString*)file;
+-(void) flush;
 @end

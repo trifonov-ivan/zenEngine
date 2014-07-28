@@ -9,6 +9,7 @@
 comment     \/\*([^*]|\n)*\*\/
 digit       [0-9]
 ichar       [A-Z_a-z]
+symbol      [A-Z_a-z_0-9]
 integer     {digit}+
 newline     \n
 strchar     ([ ~]|\\n)
@@ -52,7 +53,7 @@ strliteral  \"[^"]*{escquote}*\"
 
 "random"        return RANDOM;
 
-{ichar}+        {yylval.textValue = strdup(yytext); return TOKEN;}
+{identifier}    {yylval.textValue = strdup(yytext); return TOKEN;}
 
 {integer}       {yylval.intValue = atoi(yytext); return INTEGER;}
 
