@@ -212,5 +212,5 @@ void yylog(char *s) {
 
 
 void yyerror(char *s) {
-    fprintf(stderr, "ERROR: %s\n", s);
+    printf("%d: %s at %s\n", yylineno, s, yytext);
 }
