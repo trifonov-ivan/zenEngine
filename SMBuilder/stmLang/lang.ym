@@ -184,6 +184,7 @@ array:
 effect:
     'effects' '.' TOKEN                         {addEffectToLayer($3);}
     | effect '.' ADD_LIST '(' number_list ')'   {addListToEffect($5);}
+    | effect '.' ADD_LIST '(' number_list ','')'   {addListToEffect($5);}
     | effect '.' ADD_SQUARE '(' NUMBER ',' NUMBER ')'   {addSquareEffect($5,$7);}
 ;
 
@@ -212,5 +213,5 @@ void yylog(char *s) {
 
 
 void yyerror(char *s) {
-    printf("%d: %s at %s\n", yylineno, s, yytext);
+//    printf("%d: %s at %s\n", yylineno, s, yytext);
 }

@@ -179,7 +179,9 @@ static SMReader *sharedReader = nil;
 
 -(void) processStateProps:(nodeList*) list
 {
-    nodeList *anListObject = list;
+    if (!list)
+        return;
+    nodeList *anListObject = list->first;
     while (anListObject != NULL)
     {
         if (anListObject->content != NULL)
