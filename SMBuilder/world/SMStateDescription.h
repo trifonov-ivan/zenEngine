@@ -22,7 +22,7 @@ typedef BOOL (^ValidationBlock)(SMEntity *myObj, SMTransition *tran);
 @property (nonatomic, strong) NSMutableArray *onEnterArray;
 @property (nonatomic, strong) NSMutableArray *onUpdateArray;
 @property (nonatomic, strong) NSMutableArray *onLeaveArray;
-
+@property (nonatomic, weak) SM* associatedSM;
 
 +(instancetype)stateDescriptionForKey:(NSString*)key;
 +(instancetype)stateDescriptionForKey:(NSString*)key fromStateMachine:(SM*)sm;

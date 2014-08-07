@@ -40,6 +40,7 @@
     {
         descript = [self stateDescriptionForKey:key];
         [sm addState:descript];
+        descript.associatedSM = sm;
     }
     return descript;
 }
