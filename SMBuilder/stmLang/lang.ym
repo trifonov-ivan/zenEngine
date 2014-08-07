@@ -118,6 +118,7 @@ decl_list:                                      {$$ = NULL;}
 decl:
     prop sign expr                              {$$ = leafCall($2,$1,$3);}
     | math sign expr                            {$$ = leafMathCall($2,$1,$3);}
+    | math_expr sign expr                       {$$ = leafMathCall($2,$1,$3);}
     | prop IN range                             {$$ = leafCall(signINRANGE,$1,$3);}
     | prop IN array                             {$$ = leafCall(signIN,$1,$3);}
     | math IN range                             {$$ = leafMathCall(signINRANGE,$1,$3);}
@@ -156,6 +157,7 @@ math:
 
 math_expr:
     RANDOM '(' NUMBER ')'                       {$$ = mathCall(signRANDOM,leafCall(0,NULL,$3), NULL);}
+    | RANDOM '(' NUMBER ',' NUMBER ')'          {$$ = mathCall(signRANDOM,leafCall(0,NULL,__retained @[$3,$5]), NULL);}
     | prop                                      {$$ = leafCall(0, $1, NULL);}
     | NUMBER                                    {$$ = leafCall(0,NULL,$1);}
 

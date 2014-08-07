@@ -514,8 +514,20 @@ static SMReader *sharedReader = nil;
                 case signRANDOM:
                 {
                     nodeType *source = node->opr.left;
-                    int limitConst = [source->leaf.value intValue];
-                    node->opr.value = __retained @(arc4random()%limitConst);
+                    if ([source->leaf.value isKindOfClass:[NSNumber class]])
+                    {
+                        int limitConst = [source->leaf.value intValue];
+                        node->opr.value = __retained @(arc4random()%limitConst);
+                    }
+                    if ([source->leaf.value isKindOfClass:[NSArray class]])
+                    {
+                        NSArray *array = source->leaf.value;
+                        int limitConst = [array[0] intValue];
+                        int type = [array[1] intValue];
+                        if (!type)
+                            type = 8;
+                        node->opr.value = __retained @(arc4random() % (MAX(type,(limitConst / (entity.timeInCurrentState + 1) + 1))));
+                    }
                 }
                     break;
                 case signPLUS:
@@ -559,7 +571,7 @@ static SMReader *sharedReader = nil;
 
 -(BOOL) executionResult: (nodeList*) list :(SMEntity*)entity :(SMTransition*)transition
 {
-    nodeList *anListObject = list;
+    nodeList *anListObject = list->first;
     BOOL globalResult = NO;
     BOOL localResult = YES;
     BOOL inverseResult;

@@ -12,9 +12,9 @@
 #import "SMTransition.h"
 @implementation SMEntity
 
-- (instancetype)init
+- (instancetype)initWithEngine:(Engine *)engine
 {
-    self = [super init];
+    self = [super initWithEngine:engine];
     if (self) {
         self.isActive = NO;
     }
