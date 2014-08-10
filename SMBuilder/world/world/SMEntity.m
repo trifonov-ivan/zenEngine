@@ -113,6 +113,7 @@
     if (tranKey)
         [self AddComponent:[FastString Make:@"back"] withComponent:self.currentTransition.startPoint.key];
 }
+
 -(void) restoreBackState
 {
     NSString *key = (NSString*)[self Get:[self.Engine GetComponentIndex:[FastString Make:@"back"]]];
@@ -121,5 +122,9 @@
     [self RemoveComponent:[FastString Make:@"back"]];
 }
 
+-(NSString*)backStateKey
+{
+   return (NSString*)[self Get:[self.Engine GetComponentIndex:[FastString Make:@"back"]]];
+}
 
 @end

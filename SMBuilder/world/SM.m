@@ -82,7 +82,7 @@
             fromGroup:(NSString*) fromGroupKey
 {
     SMStateDescription *endPoint = [self descriptionForKey:transition.endPoint.key];
-    if (!endPoint || !transition.calculatingEndpoint)
+    if (!endPoint && !transition.calculatingEndpoint)
     {
         NSLog(@"ERROR:there is no state description with key %@",transition.endPoint.key);
         return nil;

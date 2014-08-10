@@ -10,6 +10,13 @@
 #import "SMEntity.h"
 #import "SMTransition.h"
 #import "SM.h"
+
+@interface SMStateDescription()
+{
+    BOOL prepareRestore;
+}
+@end
+
 @implementation SMStateDescription
 
 - (id)init
@@ -56,6 +63,10 @@
 -(void)entityEntered:(SMEntity*)entity
 {
     entity.timeInCurrentState = 0;
+    if (prepareRestore)
+    {
+        [entity storeBackState:nil];
+    }
     if (entity.isActive)
     {
         for (CompletionBlock block in self.onEnterArray)
@@ -71,6 +82,11 @@
         for (CompletionBlock block in self.onUpdateArray)
             block(entity);
     }
+}
+
+-(void) setRestorable:(NSNumber*) restorable
+{
+    prepareRestore = YES;
 }
 
 -(instancetype)addMusicalTheme:(NSString*)themeKey

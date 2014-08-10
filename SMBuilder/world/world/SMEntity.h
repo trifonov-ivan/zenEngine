@@ -37,5 +37,6 @@
 
 -(void) storeBackState:(NSString*)key;
 -(void) restoreBackState;
+-(NSString*)backStateKey;
 
 @end

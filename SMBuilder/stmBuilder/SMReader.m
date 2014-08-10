@@ -96,7 +96,7 @@ static SMReader *sharedReader = nil;
     if (str.length > 0)
     {
         yy_switch_to_buffer(yy_scan_string([str UTF8String]));
-      yydebug = 1;
+//      yydebug = 1;
         yyparse();
     }
 }
@@ -300,6 +300,13 @@ static SMReader *sharedReader = nil;
     [self addListToEffect:array];
 }
 
+-(void) makeTransitionBack:(SMTransition*) tran
+{
+    tran.calculatingEndpoint = ^SMStateDescription*(SMEntity *entity, SMTransition *tran){
+        return [entity.associatedSM descriptionForKey:[entity backStateKey]];
+    };
+}
+
 -(void) registerTransitionFrom:(NSString*) from to:(NSString*) to
 {
     NSLog(@"%@ -> %@",from,to);
@@ -315,7 +322,14 @@ static SMReader *sharedReader = nil;
             actualTranPool = [actualSM addTransition:transition fromGroup:from toGroup:to];
         } else if (fromGroup && !toGroup)
         {
-            transition.endPoint = [actualSM descriptionForKey:to];
+            if ([to isEqualToString:@"back"])
+            {
+                [self makeTransitionBack:transition];
+            }
+            else
+            {
+                transition.endPoint = [actualSM descriptionForKey:to];
+            }
             actualTranPool = [actualSM addTransition:transition fromGroup:from];
         } else if (!fromGroup && toGroup)
         {
@@ -324,12 +338,20 @@ static SMReader *sharedReader = nil;
         } else
         {
             SMStateDescription *fromState = [actualSM descriptionForKey:from];
-            SMStateDescription *toState = [actualSM descriptionForKey:to];
-            if (!(fromState && toState))
+            if (![to isEqualToString:@"back"])
             {
-                NSAssert(TRUE,@"There is no one from states %@ | %@",from, to);
+                SMStateDescription *toState = [actualSM descriptionForKey:to];
+                if (!(fromState && toState))
+                {
+                    NSAssert(TRUE,@"There is no one from states %@ | %@",from, to);
+                }
+                transition = [SMTransition transitionFrom:fromState to:toState withBlock:nil];
             }
-            transition = [SMTransition transitionFrom:fromState to:toState withBlock:nil];
+            else
+            {
+                transition = [SMTransition transitionFrom:fromState to:nil withBlock:nil];
+                [self makeTransitionBack:transition];
+            }
             [actualSM addTransition:transition];
             transitions[stringKey] = transition;
             actualTranPool = @[transition];
