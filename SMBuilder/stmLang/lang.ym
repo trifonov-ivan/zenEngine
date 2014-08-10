@@ -110,7 +110,7 @@ tran_descript:
 
 decl_list:                                      {$$ = NULL;}
     | decl ';'                                  {$$ = listWithParam($1);}
-    | decl_list decl ';'                        {$$ = addNodeToList($1,$2);}
+    | decl_list decl ';'                        {if ($1) {$$ = addNodeToList($1,$2);} else {$$ = listWithParam($2);}}
     | decl_list OR decl_list                    {$$ = orList($1,$3);}
     | '(' decl_list ')'                         {$$ = $2;}
 ;
@@ -129,6 +129,7 @@ decl:
     | PLUS TOKEN '{' decl_list '}'              {
                                                     addComponent($2);
                                                     processComponentProps($4);
+                                                    $$ = NULL;
                                                 }
     | PLUS TOKEN                                {addComponent($2); $$ = NULL;}
     | MINUS TOKEN                               {removeComponent($2); $$ = NULL;}
