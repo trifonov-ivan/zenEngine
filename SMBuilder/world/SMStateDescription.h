@@ -17,7 +17,6 @@ typedef BOOL (^ValidationBlock)(SMEntity *myObj, SMTransition *tran);
 @interface SMStateDescription : NSObject
 @property (nonatomic, strong) NSString *key;
 @property (nonatomic, strong) NSMutableArray *outerTransitions;
-@property (nonatomic, strong) NSMutableArray *outerTargets;
 @property (nonatomic, strong) NSString *musicalTheme;
 @property (nonatomic, strong) NSMutableArray *onEnterArray;
 @property (nonatomic, strong) NSMutableArray *onUpdateArray;

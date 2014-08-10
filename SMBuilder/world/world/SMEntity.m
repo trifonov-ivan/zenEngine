@@ -10,6 +10,8 @@
 #import "World.h"
 #import "SM.h"
 #import "SMTransition.h"
+#import "Engine.h"
+
 @implementation SMEntity
 
 - (instancetype)initWithEngine:(Engine *)engine
@@ -31,9 +33,18 @@
     [self.world processEvent:event toEntity:self withData:data];
 }
 
--(BOOL) canPassToState:(NSString*) stateKey
+-(BOOL) canProcessEvent:(NSString*) event
 {
-    return [self.stateDescription.outerTargets containsObject:stateKey];
+    __block SMTransition *transitionForEvent = nil;
+    [self.stateDescription.outerTransitions enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        SMTransition *tran = obj;
+        if ([tran.event isEqualToString:event])
+        {
+            transitionForEvent = tran;
+            *stop = YES;
+        }
+    }];
+    return transitionForEvent;
 }
 
 -(void) setStateDescription:(SMStateDescription *)stateDescription
@@ -63,6 +74,51 @@
 -(void) entityPrepareToRemove
 {
     
+}
+
++(instancetype) registerEntity:(SMEntity*) entity FromRepresentation:(NSDictionary*) rep onWorld:(World*)world
+{
+    if (!entity)
+        entity = [world addEntityWithInitialState:rep[@"stateKey"] withStateMachineKey:rep[@"stateMachineKey"] withDataSource:rep[@"dataSource"] withEntityClass:[self class]];
+    NSDictionary *components = rep[@"components"];
+    
+    for (NSString *key in components.allKeys)
+    {
+        [entity AddComponent:[FastString Make:key] withComponent:components[key]];
+    }
+    return entity;
+}
+
+-(id) entityRepresentation
+{
+    NSMutableDictionary *components = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *indexList = self.Engine.componentIndexes;
+    for (FastString *indexKey in indexList.allKeys)
+    {
+        NSNumber *indexNum = indexList[indexKey];
+        if (indexNum)
+        {
+        Index *index = [[Index alloc] initWithIndex:[indexNum intValue] andWithName:indexKey];
+        id data = [self Get:index];
+        if (data)
+            components[indexKey.String] = data;
+        }
+    }
+    return @{@"components":components};
+}
+
+-(void) storeBackState:(NSString*)key
+{
+    NSString *tranKey = key ? key : self.currentTransition.startPoint.key;
+    if (tranKey)
+        [self AddComponent:[FastString Make:@"back"] withComponent:self.currentTransition.startPoint.key];
+}
+-(void) restoreBackState
+{
+    NSString *key = (NSString*)[self Get:[self.Engine GetComponentIndex:[FastString Make:@"back"]]];
+    if (key)
+        [self.world forceSetEntity:self toStateWithKey:key];
+    [self RemoveComponent:[FastString Make:@"back"]];
 }
 
 

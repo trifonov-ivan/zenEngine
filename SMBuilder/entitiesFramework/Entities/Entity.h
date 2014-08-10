@@ -23,7 +23,6 @@
 @property(nonatomic, unsafe_unretained) Engine* Engine;
 @property(nonatomic, readonly) Filter* OldFilter;
 @property(nonatomic, strong) Filter* Filter;
-@property(nonatomic, readonly) Signal1* FilterChange;
 
 - (id) initWithEngine:(Engine*)engine;
 

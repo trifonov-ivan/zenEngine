@@ -23,6 +23,14 @@
                          withCoordinates:(int) x
                                         :(int) y;
 
+-(PlaneEntity*)addEntityWithInitialState:(NSString *)key
+                     withStateMachineKey:(NSString *)smKey
+                          withDataSource:(id)dataSource
+                         withEntityClass:(Class)class
+                         withCoordinates:(int) x
+                                        :(int) y
+                            supressStart:(BOOL)supress;
+
 -(id)valueForEntity:(SMEntity*)entity forKey:(NSString*)key;
 -(void) registerLayer:(SMLayer*)layer forName:(NSString*)name;
 -(NSArray*)getLayers;

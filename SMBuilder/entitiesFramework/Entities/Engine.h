@@ -21,7 +21,6 @@
     NSMutableDictionary* _entitiesMap;
     SetArray* _allEntities;
     
-    NSMutableDictionary* _componentIndexes;
     int _lastComponentIndex;
 }
 
@@ -30,11 +29,13 @@
 
 @property(nonatomic, readonly) int ComponentsCount;
 @property(nonatomic, readonly) NSMutableArray* SystemCollection;
+@property(nonatomic, readonly) NSMutableDictionary* componentIndexes;
 
 - (Index*) GetComponentIndex:(FastString*)componentName;
 
 - (Filter*) GetFilterByName	:(NSArray*)names;
 - (Filter*) GetFilterByIndex:(NSArray*)indexes;
+- (void) OnFilterChange:(Entity*) entity;
 
 - (NSObject<IArrayHolder>*) GetAllEntities;
 - (NSObject<IArrayHolder>*) GetEntities:(Filter*)filter;

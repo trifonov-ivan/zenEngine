@@ -21,8 +21,6 @@
         
         _Filter = [[Filter alloc] initWithMask:0];
         _OldFilter = [[Filter alloc] initWithMask:0];
-        
-        _FilterChange = [[Signal1 alloc] init];
     }
     
     return self;
@@ -33,7 +31,7 @@
         _OldFilter.Mask = _Filter.Mask;
         _Filter.Mask = Filter.Mask;
         
-        [_FilterChange dispatchWithObject:self];
+        [self.Engine OnFilterChange:self];
     }
 }
 
@@ -56,7 +54,7 @@
         return ((ComponentsDataHolder*)obj).Data;
     }
     else {
-        return [[NSObject alloc] init];
+        return nil;
     }
 }
 
@@ -74,7 +72,7 @@
     int idx = index.ComponentIndex;
     _Filter.Mask |= (UInt64)1 << idx;
     [_components replaceObjectAtIndex:idx withObject:[[ComponentsDataHolder alloc] initWithData:component]];
-    [_FilterChange dispatchWithObject:self];
+    [self.Engine OnFilterChange:self];
     return index;
 }
 
@@ -84,7 +82,7 @@
     int idx = index.ComponentIndex;
     _Filter.Mask &= ~((UInt64)1 << idx);
     [_components replaceObjectAtIndex:idx withObject:[NSNull null]];
-    [_FilterChange dispatchWithObject:self];
+    [self.Engine OnFilterChange:self];
 }
 
 -(id) copyWithZone: (NSZone*) zone
@@ -93,7 +91,6 @@
 	copy->_OldFilter = _OldFilter.copy;
 	copy->_Filter = _Filter.copy;
 	copy->_components = _components.copy;
-	copy->_FilterChange = [[Signal1 alloc] init];
 	return copy;
 }
 

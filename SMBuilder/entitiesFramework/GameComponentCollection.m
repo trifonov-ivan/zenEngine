@@ -43,14 +43,14 @@
     
     if ([component conformsToProtocol:@protocol(IUpdateable)]) {
         NSObject<IUpdateable>* c = (NSObject<IUpdateable>*)component;
-        [c.ActiveChanged addListener:self action:@selector(OnUpdateableStateChanged)];
-        [c.UpdateOrderChanged addListener:self action:@selector(OnUpdateableStateChanged)];
+        [c.ActiveChanged addListener:self action:@selector(OnUpdateableStateChanged:)];
+        [c.UpdateOrderChanged addListener:self action:@selector(OnUpdateableStateChanged:)];
         _updateableCollectionChanged = YES;
     }
     if ([component conformsToProtocol:@protocol(IDrawable)]) {
         NSObject<IDrawable>* c = (NSObject<IDrawable>*)component;
-        [c.DrawOrderChanged addListener:self action:@selector(OnDrawableStateChanged)];
-        [c.VisibleChanged addListener:self action:@selector(OnDrawableStateChanged)];
+        [c.DrawOrderChanged addListener:self action:@selector(OnDrawableStateChanged:)];
+        [c.VisibleChanged addListener:self action:@selector(OnDrawableStateChanged:)];
         _drawableCollectionChanged = YES;
     }
     [_ComponentAdded dispatchWithObject:component];
@@ -63,15 +63,15 @@
 - (void) Remove:(NSObject*)component shouldDeinitialize:(BOOL)deinitialize {
     if ([component conformsToProtocol:@protocol(IUpdateable)]) {
         NSObject<IUpdateable>* c = (NSObject<IUpdateable>*)component;
-        [c.ActiveChanged removeListener:self action:@selector(OnUpdateableStateChanged)];
-        [c.UpdateOrderChanged removeListener:self action:@selector(OnUpdateableStateChanged)];
+        [c.ActiveChanged removeListener:self action:@selector(OnUpdateableStateChanged:)];
+        [c.UpdateOrderChanged removeListener:self action:@selector(OnUpdateableStateChanged:)];
         _updateableCollectionChanged = YES;
     }
     
     if ([component conformsToProtocol:@protocol(IDrawable)]) {
         NSObject<IDrawable>* c = (NSObject<IDrawable>*)component;
-        [c.DrawOrderChanged removeListener:self action:@selector(OnDrawableStateChanged)];
-        [c.VisibleChanged removeListener:self action:@selector(OnDrawableStateChanged)];
+        [c.DrawOrderChanged removeListener:self action:@selector(OnDrawableStateChanged:)];
+        [c.VisibleChanged removeListener:self action:@selector(OnDrawableStateChanged:)];
         _drawableCollectionChanged = YES;
     }
     

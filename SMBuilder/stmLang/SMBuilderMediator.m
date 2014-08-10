@@ -180,14 +180,3 @@ void setTranEvent(NSString* event)
 {
     [[SMReader sharedReader] setTransitionEvent:event];
 }
-
-void processClassSetProp(char *prop, char *parentClass)
-{
-    [[SMReader sharedReader] processClassSetProp:STR(prop)
-                                                :STR(parentClass)];
-}
-
-BOOL executionResult(nodeList* node)
-{
-    return [[SMReader sharedReader] executionResult:node];
-}

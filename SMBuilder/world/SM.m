@@ -31,18 +31,6 @@
     [descriptions setObject:description forKey:description.key];
     NSLog(@"added state for key: %@",description.key);
 }
--(void) addTransition:(SMTransition*)transition from:(NSString*)fromKey to:(NSString*)toKey
-{
-    SMStateDescription *from = descriptions[fromKey];
-    SMStateDescription *to = descriptions[toKey];
-    if (!from || !to)
-        return;
-    transition.startPoint = from;
-    transition.endPoint = to;
-    [from.outerTransitions addObject:transition];
-    [from.outerTargets addObject:to.key];
-    NSLog(@"added %@ -> %@ transition",from.key, to.key);
-}
 
 -(void) addTransition:(SMTransition*)transition
 {
@@ -50,7 +38,6 @@
         return;
     SMStateDescription *from = descriptions[transition.startPoint.key];
     [from.outerTransitions addObject:transition];
-    [from.outerTargets addObject:transition.endPoint.key];
     NSLog(@"added %@ -> %@ transition",from.key, transition.endPoint.key);
 }
 
@@ -93,12 +80,11 @@
 
 -(NSArray*) addTransition:(SMTransition*)transition
             fromGroup:(NSString*) fromGroupKey
-              toState:(NSString*)toKey
 {
-    SMStateDescription *endPoint = [self descriptionForKey:toKey];
-    if (!endPoint)
+    SMStateDescription *endPoint = [self descriptionForKey:transition.endPoint.key];
+    if (!endPoint || !transition.calculatingEndpoint)
     {
-        NSLog(@"ERROR:there is no state description with key %@",toKey);
+        NSLog(@"ERROR:there is no state description with key %@",transition.endPoint.key);
         return nil;
     }
     NSMutableArray *resultTrans = [NSMutableArray new];
@@ -112,6 +98,7 @@
         tran.event = transition.event;
         tran.completionBlock = transition.completionBlock;
         tran.validationBlock = transition.validationBlock;
+        tran.calculatingEndpoint = transition.calculatingEndpoint;
         [self addTransition:tran];
         [resultTrans addObject:tran];
     }
@@ -119,13 +106,12 @@
 }
 
 -(NSArray*) addTransition:(SMTransition*)transition
-            fromState:(NSString*)fromKey
               toGroup:(NSString*) toGroupKey
 {
-    SMStateDescription *startPoint = [self descriptionForKey:fromKey];
+    SMStateDescription *startPoint = [self descriptionForKey:transition.startPoint.key];
     if (!startPoint)
     {
-        NSLog(@"ERROR:there is no state description with key %@",fromKey);
+        NSLog(@"ERROR:there is no state description with key %@",transition.startPoint.key);
         return nil;
     }
     NSMutableArray *resultTrans = [NSMutableArray new];
@@ -139,7 +125,7 @@
         tran.event = transition.event;
         tran.completionBlock = transition.completionBlock;
         tran.validationBlock = transition.validationBlock;
-
+        tran.calculatingEndpoint = transition.calculatingEndpoint;
         [self addTransition:tran];
         [resultTrans addObject:tran];
     }
@@ -154,7 +140,8 @@
     NSMutableArray *resultTrans = [NSMutableArray new];
     for (SMStateDescription *from in groups[fromGroupKey])
     {
-        [resultTrans addObjectsFromArray:[self addTransition:transition fromState:from.key toGroup:toGroupKey]];
+        transition.startPoint = from;
+        [resultTrans addObjectsFromArray:[self addTransition:transition toGroup:toGroupKey]];
     }
     return resultTrans;
 }

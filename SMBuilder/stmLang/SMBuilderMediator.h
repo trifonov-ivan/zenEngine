@@ -38,7 +38,6 @@ void checkTransitionFillingState(transitionStateKey key);
 void addComponent(char *componentName);
 void removeComponent(char *componentName);
 void processComponentProps(nodeList *list);
-void processClassSetProp(char *prop, char *parentClass);
 
 nodeList* listWithParam(nodeType *param);
 nodeList* addNodeToList(nodeList *listcode, nodeType *param);
@@ -49,5 +48,4 @@ nodeType* mathCall(int sign, nodeType *leftOperand, nodeType *rightOperand);
 nodeType* leafCall(int sign, char *leftOperand, id rightOperand);
 nodeType* leafMathCall(int sign, nodeType *leftOperand, id rightOperand);
 
-BOOL executionResult(nodeList* node);
 #endif

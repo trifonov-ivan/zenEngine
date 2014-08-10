@@ -75,7 +75,8 @@
     }
 }
 
-- (void) OnFilterChange:(Entity*) entity {
+- (void) OnFilterChange:(Entity*) entity
+{
     if (entity.OldFilter.Mask < entity.Filter.Mask)
         [self OnComponentAdded:entity];
     else
@@ -110,8 +111,6 @@
             [setArray Add:entity];
         }
     }
-    
-    [entity.FilterChange addListener:self action:@selector(OnFilterChange:)];
 }
 
 - (void) UnregisterEntity:(Entity*)entity {
@@ -122,8 +121,6 @@
             [setArray Remove:entity];
         }
     }
-    
-    [entity.FilterChange removeListener:self action:@selector(OnFilterChange:)];
 }
 
 -(void) removeAllSystems {

@@ -12,6 +12,8 @@
 
 #import "SMEntity.h"
 typedef void (^TranBlock)(SMEntity *myObj, SMTransition *tran);
+typedef SMStateDescription* (^DirectionBlock)(SMEntity *myObj, SMTransition *tran);
+
 
 @interface SMTransition : NSObject
 
@@ -20,13 +22,20 @@ typedef void (^TranBlock)(SMEntity *myObj, SMTransition *tran);
 @property (nonatomic, copy) CompletionBlock completionBlock;
 @property (nonatomic, copy) ValidationBlock validationBlock;
 
+
 @property (nonatomic, strong) NSString *event;
 
 @property (nonatomic, copy) TranBlock onOutBlock;
 @property (nonatomic, copy) TranBlock onInBlock;
 
+@property (nonatomic, copy) DirectionBlock calculatingEndpoint;
+
 +(id) transitionFrom:(SMStateDescription*)from
                   to:(SMStateDescription*)to
+           withBlock:(CompletionBlock)block;
+
++(id) transitionFrom:(SMStateDescription*)from
+    toStateFromBlock:(DirectionBlock)undefinedEndpoint
            withBlock:(CompletionBlock)block;
 
 +(id) transitionWithBlock:(CompletionBlock)block;

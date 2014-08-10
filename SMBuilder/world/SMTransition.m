@@ -21,6 +21,19 @@
     return tran;
 }
 
++(id) transitionFrom:(SMStateDescription*)from
+    toStateFromBlock:(DirectionBlock)undefinedEndpoint
+           withBlock:(CompletionBlock)block
+{
+    SMTransition *tran = [[SMTransition alloc] init];
+    tran.startPoint = from;
+    tran.endPoint = nil;
+    tran.calculatingEndpoint = undefinedEndpoint;
+    tran.completionBlock = block;
+    return tran;
+}
+
+
 +(id) transitionWithBlock:(CompletionBlock)block
 {
     SMTransition *tran = [[SMTransition alloc] init];

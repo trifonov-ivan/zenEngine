@@ -3,7 +3,7 @@
 #import "ListenerNodePool.h"
 #import "ListenerNode.h"
 
-#define GET_TARGET_ACTION_KEY(object, selector, block) [NSString stringWithFormat:@"%@%ul%ul", NSStringFromSelector(selector), [(NSObject *)object hash], [(NSObject *)block hash]]
+#define GET_TARGET_ACTION_KEY(object, selector, block) [NSString stringWithFormat:@"%@%lu%lu", NSStringFromSelector(selector), [(NSObject *)object hash], [(NSObject *)block hash]]
 
 @interface SignalBase()
 @property (nonatomic, strong) NSMutableDictionary * nodes;

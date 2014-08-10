@@ -17,7 +17,6 @@
     self = [super init];
     if (self) {
         self.outerTransitions = [NSMutableArray new];
-        self.outerTargets = [NSMutableArray new];
         self.onEnterArray = [NSMutableArray new];
         self.onLeaveArray = [NSMutableArray new];
         self.onUpdateArray = [NSMutableArray new];

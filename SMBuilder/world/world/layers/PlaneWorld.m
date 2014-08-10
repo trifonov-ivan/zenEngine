@@ -33,6 +33,21 @@
     return entity;
 }
 
+-(PlaneEntity*)addEntityWithInitialState:(NSString *)key
+                     withStateMachineKey:(NSString *)smKey
+                          withDataSource:(id)dataSource
+                         withEntityClass:(Class)class
+                         withCoordinates:(int) x
+                                        :(int) y
+                            supressStart:(BOOL)supress
+{
+    PlaneEntity* entity=(PlaneEntity*)[super addEntityWithInitialState:key withStateMachineKey:smKey withDataSource:dataSource withEntityClass:class supressStart:YES];
+    entity.x = x;
+    entity.y = y;
+    [self recalculateFrame];
+    return entity;
+}
+
 -(void) recalculateFrame
 {
     frame = CGRectMake(0, 0, 0, 0);

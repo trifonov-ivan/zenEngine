@@ -23,12 +23,19 @@
 @property (nonatomic, strong) SMStateDescription *stateDescription;
 @property (nonatomic, strong) id dataSource;
 @property (nonatomic, assign) int timeInCurrentState;
+@property (nonatomic, strong) id invokeData;
 
 -(void) update;
 -(void) processEvent:(NSString*) event withData:(id) data;
--(BOOL) canPassToState:(NSString*) stateKey;
 -(void) makeTransitonActionsFrom:(SMStateDescription*)from to:(SMStateDescription*)to;
 -(void) entityPrepareToStart;
 -(void) entityPrepareToRemove;
+-(BOOL) canProcessEvent:(NSString*) event;
+
++(instancetype) registerEntity:(SMEntity*) entity FromRepresentation:(id) representation onWorld:(World*)world;
+-(id) entityRepresentation;
+
+-(void) storeBackState:(NSString*)key;
+-(void) restoreBackState;
 
 @end

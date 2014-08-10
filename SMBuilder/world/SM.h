@@ -16,7 +16,6 @@
 
 -(void) addState:(SMStateDescription*) description;
 
--(void) addTransition:(SMTransition*)transition from:(NSString*)fromKey to:(NSString*)toKey;
 -(void) addTransition:(SMTransition*)transition;
 
 -(void) addMultipleStates:(NSArray*)states;
@@ -26,12 +25,9 @@
 -(void) addState:(SMStateDescription*) description toGroup:(NSString*)groupName;
 
 -(NSArray*) addTransition:(SMTransition*)transition
-                fromGroup:(NSString*) fromGroupKey
-                  toState:(NSString*)toKey;
-
+                fromGroup:(NSString*) fromGroupKey;
 
 -(NSArray*) addTransition:(SMTransition*)transition
-                fromState:(NSString*)fromKey
                   toGroup:(NSString*) toGroupKey;
 
 -(NSArray*) addTransition:(SMTransition *)transition

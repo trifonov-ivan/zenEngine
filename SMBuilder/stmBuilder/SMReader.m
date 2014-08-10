@@ -315,10 +315,12 @@ static SMReader *sharedReader = nil;
             actualTranPool = [actualSM addTransition:transition fromGroup:from toGroup:to];
         } else if (fromGroup && !toGroup)
         {
-            actualTranPool = [actualSM addTransition:transition fromGroup:from toState:to];
+            transition.endPoint = [actualSM descriptionForKey:to];
+            actualTranPool = [actualSM addTransition:transition fromGroup:from];
         } else if (!fromGroup && toGroup)
         {
-            actualTranPool = [actualSM addTransition:transition fromState:from toGroup:to];
+            transition.startPoint = [actualSM descriptionForKey:to];
+            actualTranPool = [actualSM addTransition:transition toGroup:to];
         } else
         {
             SMStateDescription *fromState = [actualSM descriptionForKey:from];

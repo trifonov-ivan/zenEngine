@@ -57,29 +57,12 @@
     entity.world = self;
     entity.associatedSM = sm;
     entity.dataSource = dataSource;
+    entity.invokeData = key;
     if (!supress)
     {
         entity.stateDescription = [sm descriptionForKey:key];
         [entity entityPrepareToStart];
-        if (self.isCalculatingNow)
-        {
-            [tmpThread addObject:entity];
-        }
-        else
-        {
-            @synchronized (entities)
-            {
-                [entities addObject:entity];
-            }
-        }
     }
-    return entity;
-}
-
--(void) invokeEntity:(SMEntity*)entity withStateKey:(NSString*)key
-{
-    entity.stateDescription = [entity.associatedSM descriptionForKey:key];
-    [entity entityPrepareToStart];
     if (self.isCalculatingNow)
     {
         [tmpThread addObject:entity];
@@ -92,6 +75,13 @@
         }
     }
     [entity Register];
+    return entity;
+}
+
+-(void) invokeEntity:(SMEntity*)entity withStateKey:(NSString*)key
+{
+    entity.stateDescription = [entity.associatedSM descriptionForKey:key];
+    [entity entityPrepareToStart];
 }
 
 -(SMEntity*) addEntityWithInitialState:(NSString*)key withStateMachineKey:(NSString*)smKey withDataSource:(id)dataSource withEntityClass:(Class)class
@@ -143,6 +133,9 @@
         {
             if (tran.validationBlock && !tran.validationBlock(entity,tran))
                 continue;
+            if (tran.calculatingEndpoint && !tran.calculatingEndpoint(entity,tran))
+                continue;
+            
             entity.currentTransition = tran;
             [tmp addObject:entity];
             break;
@@ -172,8 +165,14 @@
         {
             transition.onOutBlock(entity,transition);
         }
-
-        entity.stateDescription = transition.endPoint;
+        if (transition.endPoint)
+        {
+            entity.stateDescription = transition.endPoint;
+        }
+        else
+        {
+            entity.stateDescription = transition.calculatingEndpoint(entity,transition);
+        }
 
         if (transition.onInBlock)
         {
@@ -241,7 +240,7 @@
     SMTransition *transition = nil;
     for (SMTransition *tran in descr.outerTransitions)
     {
-        if (tran.endPoint == end)
+        if (tran.endPoint == end || (tran.calculatingEndpoint && tran.calculatingEndpoint(entity, tran)))
             transition = tran;
     }
     if (transition)
@@ -250,7 +249,7 @@
         {
             transition.onOutBlock(entity,transition);
         }
-        entity.stateDescription = transition.endPoint;
+        entity.stateDescription = transition.calculatingEndpoint ? transition.calculatingEndpoint(entity, transition) : transition.endPoint;
         if (transition.onInBlock)
         {
             transition.onInBlock(entity,transition);
