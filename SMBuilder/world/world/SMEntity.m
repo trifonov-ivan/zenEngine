@@ -18,7 +18,7 @@
 {
     self = [super initWithEngine:engine];
     if (self) {
-        self.isActive = NO;
+        self.isActive = YES;
     }
     return self;
 }
@@ -69,7 +69,7 @@
 
 -(void) entityPrepareToStart
 {
-    self.isActive = YES;
+
 }
 -(void) entityPrepareToRemove
 {

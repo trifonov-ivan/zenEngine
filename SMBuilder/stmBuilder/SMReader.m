@@ -401,7 +401,7 @@ static SMReader *sharedReader = nil;
 -(void) addComponent:(NSString*) name
 {
     NSLog(@"add component with name %@",name);
-    actualComponentName = [self.componentsFactoryClass componentNameForString:name];
+    actualComponentName = [FastString Make:name];
     actualComponent = [self.componentsFactoryClass blankComponentForName:actualComponentName];
 }
 -(void) removeComponent:(NSString*) name
@@ -433,6 +433,29 @@ static SMReader *sharedReader = nil;
 
 -(void) processComponentProps:(nodeList*) list
 {
+    if (!list)
+        return;
+    nodeList *anListObject = list->first;
+    if (anListObject && !anListObject->next && !actualComponent)
+    {
+        actualComponent = anListObject->content->leaf.value;
+    }
+    else
+    {
+        if (!actualComponent)
+        {
+            actualComponent = [[NSMutableDictionary alloc] init];
+        }
+        
+        while (anListObject != NULL)
+        {
+            if (anListObject->content != NULL)
+            {
+                [self attachNodeProperty:anListObject->content toId:actualComponent];
+            }
+            anListObject = anListObject->next;
+        }
+    }
     [self finalizeComponent];
 }
 

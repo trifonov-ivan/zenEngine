@@ -16,6 +16,8 @@
 
 nodeList* listWithParam(nodeType *param)
 {
+    if (!param)
+        return NULL;
     nodeList *list = (nodeList*)malloc(sizeof(nodeList));
     list->content = param;
     list->first = list;
@@ -25,6 +27,8 @@ nodeList* listWithParam(nodeType *param)
 
 nodeList* addNodeToList(nodeList *listcode, nodeType *param)
 {
+    if (!param)
+        return listcode;
     nodeList *list = (nodeList*)malloc(sizeof(nodeList));
     list->content = param;
     if (listcode)

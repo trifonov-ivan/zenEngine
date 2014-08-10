@@ -60,8 +60,8 @@
     entity.invokeData = key;
     if (!supress)
     {
-        entity.stateDescription = [sm descriptionForKey:key];
         [entity entityPrepareToStart];
+        entity.stateDescription = [sm descriptionForKey:key];
     }
     if (self.isCalculatingNow)
     {
@@ -80,8 +80,8 @@
 
 -(void) invokeEntity:(SMEntity*)entity withStateKey:(NSString*)key
 {
-    entity.stateDescription = [entity.associatedSM descriptionForKey:key];
     [entity entityPrepareToStart];
+    entity.stateDescription = [entity.associatedSM descriptionForKey:key];
 }
 
 -(SMEntity*) addEntityWithInitialState:(NSString*)key withStateMachineKey:(NSString*)smKey withDataSource:(id)dataSource withEntityClass:(Class)class
