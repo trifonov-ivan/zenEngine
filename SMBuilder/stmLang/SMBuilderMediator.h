@@ -47,5 +47,6 @@ nodeList* orList(nodeList *first, nodeList *second);
 nodeType* mathCall(int sign, nodeType *leftOperand, nodeType *rightOperand);
 nodeType* leafCall(int sign, char *leftOperand, id rightOperand);
 nodeType* leafMathCall(int sign, nodeType *leftOperand, id rightOperand);
+nodeType* funcCall(char* funcName, nodeList* params);
 
 #endif

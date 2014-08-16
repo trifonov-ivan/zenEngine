@@ -85,7 +85,7 @@ nodeType* leafCall(int sign, char *leftOperand, id rightOperand)
     node->type = typeLeaf;
     node->leaf.sign = sign;
     node->leaf.prop = __retained(STR(leftOperand));
-    node->leaf.value = rightOperand;
+    node->leaf.value = __retained rightOperand;
     node->leaf.left = NULL;
     return node;
 }
@@ -101,6 +101,14 @@ nodeType* leafMathCall(int sign, nodeType *leftOperand, id rightOperand)
     return node;
 }
 
+nodeType* funcCall(char* funcName, nodeList* params)
+{
+    nodeType *node = (nodeType*)malloc(sizeof(nodeType));
+    node->type = typeFunction;
+    node->func.funcSEL = [[SMReader sharedReader] macroMethodForName:STR(funcName)];
+    node->func.params = params;
+    return node;
+}
 
 void addComponent(char *componentName)
 {

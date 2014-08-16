@@ -15,6 +15,8 @@
 #import "PlaneStateDescription.h"
 #import "ComponentsFactory.h"
 #import "SMEntity.h"
+#import "AbstractMacros.h"
+#import "getSubclasses.h"
 
 extern int yyparse();
 extern char * yytext;
@@ -31,6 +33,10 @@ YY_BUFFER_STATE yy_scan_string (const char *);
     transitionStateKey actualTransitionState;
     NSMutableDictionary *transitions;
     NSMutableDictionary *stateInheritanceMap;
+
+    NSMutableDictionary *macroMap;
+    NSMutableArray *macroArray;
+    
     SMStateDescription *actualState;
     stateStateKey actualStateState;
     
@@ -66,6 +72,10 @@ static SMReader *sharedReader = nil;
         basicStateClass = [SMStateDescription class];
         transitions = [NSMutableDictionary new];
         stateInheritanceMap = [NSMutableDictionary new];
+        // need no to flush it
+        macroMap = [NSMutableDictionary new];
+        macroArray = [NSMutableArray new];
+        [self registerMacroses];
     }
     return self;
 }
@@ -84,20 +94,57 @@ static SMReader *sharedReader = nil;
 
 }
 
+-(NSInvocation*) macroMethodForName:(NSString*) name;
+{
+    Class macroClass = macroMap[name];
+    if (!macroClass)
+    {
+        NSLog(@"error: unrecognized macros:%@",name);
+        return nil;
+    }
+    NSInvocation *invokation = [NSInvocation invocationWithMethodSignature:[macroClass instanceMethodSignatureForSelector:@selector(invokeWithParams:forEntity:andTransition:)]];
+    invokation.selector = @selector(invokeWithParams:forEntity:andTransition:);
+    invokation.target = __retained [[macroClass alloc] init];
+    return __retained invokation;
+}
+
+-(void) registerMacro:(Class) MacroClass
+{
+    if ([MacroClass name])
+    {
+        macroMap[ [MacroClass name] ] = MacroClass;
+    }
+}
+
+-(void) registerMacroses
+{
+    NSArray *macrosClasses = ClassGetSubclasses([AbstractMacros class]);
+    for (Class macrosClass in macrosClasses)
+    {
+        if (macrosClass != [AbstractMacros class])
+        {
+            NSLog(@"registering macros class %@ for name %@",macrosClass, [macrosClass name]);
+            [self registerMacro:macrosClass];
+        }
+    }
+}
+
 -(void) processFile:(NSString *)file
 {
-    if (!self.world || !self.componentsFactoryClass)
+    if (!self.world)
     {
-        NSAssert(TRUE, @"There is no world to process SM");
+        NSAssert(FALSE, @"There is no world to process SM");
     }
     NSString *str = [NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:nil];
     ;
     NSLog(@"readed content with lenght %lud from %@", (unsigned long)str.length, file);
     if (str.length > 0)
     {
-        yy_switch_to_buffer(yy_scan_string([str UTF8String]));
-//      yydebug = 1;
-        yyparse();
+        @autoreleasepool {
+            yy_switch_to_buffer(yy_scan_string([str UTF8String]));
+            yydebug = 1;
+            yyparse();            
+        }
     }
 }
 
@@ -115,6 +162,8 @@ static SMReader *sharedReader = nil;
 
 -(void) processSMProps:(nodeList*) list
 {
+    if (!list)
+        return;
     nodeList *anListObject = list->first;
     while (anListObject != NULL)
     {
@@ -366,6 +415,8 @@ static SMReader *sharedReader = nil;
 
 -(void) processTranProps:(nodeList*) list
 {
+    if (!list)
+        return;
     __block SMReader *wself = self;
     switch (actualTransitionState) {
         case TSK_COMMON:
@@ -555,27 +606,54 @@ static SMReader *sharedReader = nil;
                 return nil;
             }
         }
+            break;
+        case typeFunction:
+        {
+            NSInvocation *invocation = node->func.funcSEL;
+            nodeList *list = node->func.params;
+            NSMutableArray *params = [[NSMutableArray alloc] init];
+            if (list)
+            {
+                list = list->first;
+                while (list) {
+                    id result = [self mathExpressionResult:list->content :entity :transition];
+                    NSAssert (result, @"function params must exists!");
+                    [params addObject:result];
+                    list = list -> next;
+                }
+            }
+            [invocation setArgument:&params atIndex:2];
+            [invocation setArgument:&entity atIndex:3];
+            [invocation setArgument:&transition atIndex:4];
+            [invocation retainArguments];
+            [invocation invoke];
+            id invocationResult = nil;
+            [invocation getReturnValue:&invocationResult];
+            node->opr.value = invocationResult;
+            return invocationResult;
+        }
+            break;
         case typeMath:
         {
             switch (node->opr.sign) {
-                case signRANDOM:
-                {
-                    nodeType *source = node->opr.left;
-                    if ([source->leaf.value isKindOfClass:[NSNumber class]])
-                    {
-                        int limitConst = [source->leaf.value intValue];
-                        node->opr.value = __retained @(arc4random()%limitConst);
-                    }
-                    if ([source->leaf.value isKindOfClass:[NSArray class]])
-                    {
-                        NSArray *array = source->leaf.value;
-                        int limitConst = [array[0] intValue];
-                        int type = [array[1] intValue];
-                        if (!type)
-                            type = 8;
-                        node->opr.value = __retained @(arc4random() % (MAX(type,(limitConst / (entity.timeInCurrentState + 1) + 1))));
-                    }
-                }
+//                case signFUNC:
+//                {
+//                    nodeType *source = node->opr.left;
+//                    if ([source->leaf.value isKindOfClass:[NSNumber class]])
+//                    {
+//                        int limitConst = [source->leaf.value intValue];
+//                        node->opr.value = __retained @(arc4random()%limitConst);
+//                    }
+//                    if ([source->leaf.value isKindOfClass:[NSArray class]])
+//                    {
+//                        NSArray *array = source->leaf.value;
+//                        int limitConst = [array[0] intValue];
+//                        int type = [array[1] intValue];
+//                        if (!type)
+//                            type = 8;
+//                        node->opr.value = __retained @(arc4random() % (MAX(type,(limitConst / (entity.timeInCurrentState + 1) + 1))));
+//                    }
+//                }
                     break;
                 case signPLUS:
                 {
@@ -618,6 +696,8 @@ static SMReader *sharedReader = nil;
 
 -(BOOL) executionResult: (nodeList*) list :(SMEntity*)entity :(SMTransition*)transition
 {
+    if (!list)
+        return NO;
     nodeList *anListObject = list->first;
     BOOL globalResult = NO;
     BOOL localResult = YES;

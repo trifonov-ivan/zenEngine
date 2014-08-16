@@ -10,8 +10,8 @@
 #import "World.h"
 #import "NodeType.h"
 #import "SMBuilderMediator.h"
-
 @class SMTransition;
+
 @interface SMReader : NSObject
 
 @property (nonatomic, strong) World *world;
@@ -43,7 +43,8 @@
 
 -(BOOL) executionResult: (nodeList*) list :(SMEntity*)entity :(SMTransition*)transition;
 
-
+-(NSInvocation*) macroMethodForName:(NSString*) name;
+-(void) registerMacro:(Class) MacroClass;
 
 +(SMReader*) sharedReader;
 -(void) processFile:(NSString*)file;

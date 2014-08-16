@@ -44,6 +44,11 @@
 		200A8057196DB761005B0C01 /* SignalAny.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FCA196DB6DC005B0C01 /* SignalAny.m */; };
 		200A8059196DB761005B0C01 /* SignalBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 200A7FCC196DB6DC005B0C01 /* SignalBase.m */; };
 		200A805C196DB7D7005B0C01 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 200A805B196DB7D7005B0C01 /* CoreGraphics.framework */; };
+		20504A1B199F67A6002B2B38 /* AbstractMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 20504A1A199F67A6002B2B38 /* AbstractMacros.m */; };
+		20504A1E199F6BD2002B2B38 /* RandomMacro.m in Sources */ = {isa = PBXBuildFile; fileRef = 20504A1D199F6BD2002B2B38 /* RandomMacro.m */; };
+		20504A21199F6BDC002B2B38 /* FAbsMacro.m in Sources */ = {isa = PBXBuildFile; fileRef = 20504A20199F6BDC002B2B38 /* FAbsMacro.m */; };
+		20504A24199F6C20002B2B38 /* TimedRandomMacro.m in Sources */ = {isa = PBXBuildFile; fileRef = 20504A23199F6C20002B2B38 /* TimedRandomMacro.m */; };
+		20504A28199F760B002B2B38 /* getSubclasses.m in Sources */ = {isa = PBXBuildFile; fileRef = 20504A27199F760B002B2B38 /* getSubclasses.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -140,6 +145,16 @@
 		200A7FF3196DB6DC005B0C01 /* World.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = World.h; sourceTree = "<group>"; };
 		200A7FF4196DB6DC005B0C01 /* World.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = World.m; sourceTree = "<group>"; };
 		200A805B196DB7D7005B0C01 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		20504A19199F67A6002B2B38 /* AbstractMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractMacros.h; sourceTree = "<group>"; };
+		20504A1A199F67A6002B2B38 /* AbstractMacros.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractMacros.m; sourceTree = "<group>"; };
+		20504A1C199F6BD2002B2B38 /* RandomMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomMacro.h; sourceTree = "<group>"; };
+		20504A1D199F6BD2002B2B38 /* RandomMacro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomMacro.m; sourceTree = "<group>"; };
+		20504A1F199F6BDC002B2B38 /* FAbsMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FAbsMacro.h; sourceTree = "<group>"; };
+		20504A20199F6BDC002B2B38 /* FAbsMacro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FAbsMacro.m; sourceTree = "<group>"; };
+		20504A22199F6C20002B2B38 /* TimedRandomMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimedRandomMacro.h; sourceTree = "<group>"; };
+		20504A23199F6C20002B2B38 /* TimedRandomMacro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimedRandomMacro.m; sourceTree = "<group>"; };
+		20504A26199F760B002B2B38 /* getSubclasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = getSubclasses.h; sourceTree = "<group>"; };
+		20504A27199F760B002B2B38 /* getSubclasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = getSubclasses.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +201,8 @@
 		200A7F7B196DB68E005B0C01 /* SMBuilder */ = {
 			isa = PBXGroup;
 			children = (
+				20504A25199F75F3002B2B38 /* utils */,
+				20504A18199F6783002B2B38 /* macro */,
 				200A7F9F196DB6DC005B0C01 /* entitiesFramework */,
 				200A7FCE196DB6DC005B0C01 /* Monosyne */,
 				200A7FD1196DB6DC005B0C01 /* stmBuilder */,
@@ -362,6 +379,30 @@
 			path = layers;
 			sourceTree = "<group>";
 		};
+		20504A18199F6783002B2B38 /* macro */ = {
+			isa = PBXGroup;
+			children = (
+				20504A19199F67A6002B2B38 /* AbstractMacros.h */,
+				20504A1A199F67A6002B2B38 /* AbstractMacros.m */,
+				20504A1C199F6BD2002B2B38 /* RandomMacro.h */,
+				20504A1D199F6BD2002B2B38 /* RandomMacro.m */,
+				20504A1F199F6BDC002B2B38 /* FAbsMacro.h */,
+				20504A20199F6BDC002B2B38 /* FAbsMacro.m */,
+				20504A22199F6C20002B2B38 /* TimedRandomMacro.h */,
+				20504A23199F6C20002B2B38 /* TimedRandomMacro.m */,
+			);
+			path = macro;
+			sourceTree = "<group>";
+		};
+		20504A25199F75F3002B2B38 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				20504A26199F760B002B2B38 /* getSubclasses.h */,
+				20504A27199F760B002B2B38 /* getSubclasses.m */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -415,9 +456,11 @@
 			files = (
 				200A804B196DB761005B0C01 /* ListenerNode.m in Sources */,
 				200A804D196DB761005B0C01 /* ListenerNodePool.m in Sources */,
+				20504A28199F760B002B2B38 /* getSubclasses.m in Sources */,
 				200A804F196DB761005B0C01 /* Signal0.m in Sources */,
 				200A8051196DB761005B0C01 /* Signal1.m in Sources */,
 				200A8053196DB761005B0C01 /* Signal2.m in Sources */,
+				20504A1E199F6BD2002B2B38 /* RandomMacro.m in Sources */,
 				200A8055196DB761005B0C01 /* Signal3.m in Sources */,
 				200A8057196DB761005B0C01 /* SignalAny.m in Sources */,
 				200A8059196DB761005B0C01 /* SignalBase.m in Sources */,
@@ -430,9 +473,11 @@
 				200A803C196DB75B005B0C01 /* GameComponent.m in Sources */,
 				200A803E196DB75B005B0C01 /* GameComponentCollection.m in Sources */,
 				200A8040196DB75B005B0C01 /* GameTime.m in Sources */,
+				20504A21199F6BDC002B2B38 /* FAbsMacro.m in Sources */,
 				200A8043196DB75B005B0C01 /* IDataHolder.m in Sources */,
 				200A8049196DB75B005B0C01 /* SetArray.m in Sources */,
 				200A801D196DB6FE005B0C01 /* PlaneEntity.m in Sources */,
+				20504A1B199F67A6002B2B38 /* AbstractMacros.m in Sources */,
 				200A801F196DB6FE005B0C01 /* PlaneStateDescription.m in Sources */,
 				200A8021196DB6FE005B0C01 /* PlaneWorld.m in Sources */,
 				200A8023196DB6FE005B0C01 /* SMEffect.m in Sources */,
@@ -447,6 +492,7 @@
 				200A802B196DB712005B0C01 /* lang.ym in Sources */,
 				200A802C196DB712005B0C01 /* SMBuilderMediator.m in Sources */,
 				200A802D196DB716005B0C01 /* SMReader+InternalAPI.m in Sources */,
+				20504A24199F6C20002B2B38 /* TimedRandomMacro.m in Sources */,
 				200A802E196DB719005B0C01 /* SMReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

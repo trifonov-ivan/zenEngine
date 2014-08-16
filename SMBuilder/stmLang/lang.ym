@@ -27,15 +27,15 @@
 
 %token EQ LT MT LE ME IN NOT OR MINUS PLUS STRING DIVIDE MULTIPLY
 
-%token OPEN_TERMINAL ENTER_MODIFIER EXIT_MODIFIER VALIDATION_MODIFIER ADD_LIST ADD_SQUARE EVENT_MODIFIER RANDOM
+%token OPEN_TERMINAL ENTER_MODIFIER EXIT_MODIFIER VALIDATION_MODIFIER ADD_LIST ADD_SQUARE EVENT_MODIFIER
 
 %token ERROR
 
-%type <node> decl math math_expr
+%type <node> decl math math_expr function_call
 
 %type <intValue> sign sign_ariph
 
-%type <list> decl_list
+%type <list> decl_list math_list
 
 %type <textValue> prop STRING
 
@@ -144,24 +144,25 @@ sign:
     | LE                                        {$$ = signLE;}
 ;
 
-prop:
-    TOKEN                                       {$$ = $1;}
-;
-
 math:
-    math_expr sign_ariph math_expr              {$$ = mathCall($2, $1, $3);}
-    | math sign_ariph math                      {$$ = mathCall($2, $1, $3);}
-    | math sign_ariph math_expr                 {$$ = mathCall($2, $1, $3);}
+      math sign_ariph math                      {$$ = mathCall($2, $1, $3);}
     | '(' math ')'                              {$$ = $2;}
-    | '(' math_expr ')'                         {$$ = $2;}
+    | math_expr                                 {$$ = $1;}
 ;
 
 math_expr:
-    RANDOM '(' NUMBER ')'                       {$$ = mathCall(signRANDOM,leafCall(0,NULL,$3), NULL);}
-    | RANDOM '(' NUMBER ',' NUMBER ')'          {$$ = mathCall(signRANDOM,leafCall(0,NULL,__retained @[$3,$5]), NULL);}
-    | prop                                      {$$ = leafCall(0, $1, NULL);}
+      prop                                      {$$ = leafCall(0, $1, NULL);}
     | NUMBER                                    {$$ = leafCall(0,NULL,$1);}
+    | function_call                             {$$ = $1;}
+;
 
+function_call:
+    TOKEN '(' math_list ')'                     {$$ = funcCall($1,$3);}
+;
+
+math_list:
+    | math                                      {$$ = listWithParam($1);}
+    | math_list ',' math                        {$$ = addNodeToList($1,$3);}
 ;
 
 sign_ariph:
@@ -207,6 +208,11 @@ string_val:
     STRING                                      {$$ = __retained [NSString stringWithUTF8String:$1];
                                                  $$ = [$$ stringByReplacingOccurrencesOfString:@"\"" withString:@""];}
 ;
+
+prop:
+    TOKEN                                       {$$ = $1;}
+;
+
 
 %%
 
