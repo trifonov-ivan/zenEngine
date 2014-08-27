@@ -417,13 +417,14 @@ static SMReader *sharedReader = nil;
 {
     if (!list)
         return;
+    __block nodeList *blockList = list;
     __block SMReader *wself = self;
     switch (actualTransitionState) {
         case TSK_COMMON:
             for (SMTransition *actualTran in actualTranPool)
             {
                 actualTran.completionBlock = ^BOOL(SMEntity *obj){
-                    return [wself executionResult:list :obj :nil];
+                    return [wself executionResult:blockList :obj :nil];
                 };
             }
             break;
@@ -431,7 +432,7 @@ static SMReader *sharedReader = nil;
             for (SMTransition *actualTran in actualTranPool)
             {
                 actualTran.validationBlock = ^BOOL(SMEntity *obj, SMTransition *tran){
-                    return [wself executionResult:list :obj :tran];
+                    return [wself executionResult:blockList :obj :tran];
                 };
             }
             break;
@@ -659,28 +660,28 @@ static SMReader *sharedReader = nil;
                 {
                     NSNumber *left = [self mathExpressionResult:node->opr.left :entity :transition];
                     NSNumber *right = [self mathExpressionResult:node->opr.right :entity :transition];
-                    node->opr.value = @([left doubleValue] + [right doubleValue]);
+                    node->opr.value = __retained @([left doubleValue] + [right doubleValue]);
                 }
                     break;
                 case signMINUS:
                 {
                     NSNumber *left = [self mathExpressionResult:node->opr.left :entity :transition];
                     NSNumber *right = [self mathExpressionResult:node->opr.right :entity :transition];
-                    node->opr.value = @([left doubleValue] - [right doubleValue]);
+                    node->opr.value = __retained @([left doubleValue] - [right doubleValue]);
                 }
                     break;
                 case signMULTIPLY:
                 {
                     NSNumber *left = [self mathExpressionResult:node->opr.left :entity :transition];
                     NSNumber *right = [self mathExpressionResult:node->opr.right :entity :transition];
-                    node->opr.value = @([left doubleValue] * [right doubleValue]);
+                    node->opr.value = __retained @([left doubleValue] * [right doubleValue]);
                 }
                     break;
                 case signDIVIDE:
                 {
                     NSNumber *left = [self mathExpressionResult:node->opr.left :entity :transition];
                     NSNumber *right = [self mathExpressionResult:node->opr.right :entity :transition];
-                    node->opr.value = @([left doubleValue] / [right doubleValue]);
+                    node->opr.value = __retained @([left doubleValue] / [right doubleValue]);
                 }
                     break;
                 default:

@@ -103,7 +103,7 @@ transition:
 ;
 
 tran_descript:
-    TOKEN '->' TOKEN                            {registerTransition($1, $3);}
+    TOKEN '->' TOKEN                            {registerTransition($1, $3);checkTransitionFillingState(TSK_COMMON);}
     | '(' tran_descript ')'                     {/*nothing to do*/}
     | tran_descript '.' VALIDATION_MODIFIER     {checkTransitionFillingState(TSK_VALIDATION);}
 ;
@@ -153,6 +153,7 @@ math:
 math_expr:
       prop                                      {$$ = leafCall(0, $1, NULL);}
     | NUMBER                                    {$$ = leafCall(0,NULL,$1);}
+    | string_val                                {$$ = leafCall(0,NULL,$1);}
     | function_call                             {$$ = $1;}
 ;
 
@@ -160,7 +161,7 @@ function_call:
     TOKEN '(' math_list ')'                     {$$ = funcCall($1,$3);}
 ;
 
-math_list:
+math_list:                                      {$$ = NULL;}
     | math                                      {$$ = listWithParam($1);}
     | math_list ',' math                        {$$ = addNodeToList($1,$3);}
 ;

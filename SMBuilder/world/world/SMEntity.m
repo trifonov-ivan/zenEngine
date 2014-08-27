@@ -124,7 +124,8 @@
 
 -(NSString*)backStateKey
 {
-   return (NSString*)[self Get:[self.Engine GetComponentIndex:[FastString Make:@"back"]]];
+    NSString *backKey = (NSString*)[self Get:[self.Engine GetComponentIndex:[FastString Make:@"back"]]];
+    return backKey ? backKey : @"grass";
 }
 
 @end
